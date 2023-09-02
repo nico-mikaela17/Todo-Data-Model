@@ -1,5 +1,4 @@
-import "./styles.css";
-import { removeChildren } from "../utils/index.js";
+//import { removeChildren } from "/utils/index.js";
 
 // initial todos
 
@@ -40,9 +39,7 @@ let todos = [
 
 const inputField = document.querySelector('.inputField')
 const todoList = document.querySelector('.todoList')
-const addButton = document.querySelector('.fas fa-plus')
-
-inputField.appendChild(addButton);
+const addButton = document.querySelector('.addButton')
 
 addButton.addEventListener('click', async () => {
   const todoName = inputField.value.trim();
@@ -63,12 +60,12 @@ addButton.addEventListener('click', async () => {
     // Clear the input field
     inputField.value = '';
 
-    // You can also update the UI to display the new task here
-    // For example, create a new HTML element to represent the task and append it to the todoList
     const newTaskElement = document.createElement('div');
     newTaskElement.textContent = newTask.todoName;
     todoList.appendChild(newTaskElement);
   }
 });
+
+inputField.appendChild(addButton);
 
 
