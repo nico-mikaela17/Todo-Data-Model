@@ -37,35 +37,47 @@ let todos = [
   },
 ];
 
-const inputField = document.querySelector('.inputField')
-const todoList = document.querySelector('.todoList')
-const addButton = document.querySelector('.addButton')
+document.addEventListener("click", () => {
+  const inputField = document.querySelector(".inputField");
+  const addButton = document.querySelector(".addButton");
+  const todoTable = document.querySelector(".todoList");
+  const pendingTasksCount = document.querySelector(".footer span");
+  const clearDoneButton = document.querySelector(".footer button");
 
-addButton.addEventListener('click', async () => {
-  const todoName = inputField.value.trim();
-  if (todoName.length > 0) {
-    // Create a new task object
-    const newTask = {
-      todoID: todos.length,
-      todoName,
-      todoStatus: "Open",
-      todoCategory: "Uncategorized",
-      todoComplete: false,
-      todoDueDate: "Not specified",
-    };
+  addButton.addEventListener("click", () => {
+    const todoText = inputField.value.trim();
+    if (todoText !== "") {
+      const newTodo = {
+        todoID: todos.length,
+        todoText: todoText,
+        todoStatus: todoStatus,
+        todoCategory: todoCategory,
+        todoComplete: false,
+        todoDueDate: todoDueDate,
+      };
+      todos.push(newTodo);
+      inputField.value = "";
+      updateTable();
+    }
+  });
 
-    // Add the new task to the todos array
-    todos.push(newTask);
+  clearDoneButton.addEventListener("click", () => {
+    todos = todos.filter((todo) => !todo.todoComplete);
+    updateTable();
+  });
 
-    // Clear the input field
-    inputField.value = '';
+  function updateTable() {
+    todoTable.innerHTML = "";
 
-    const newTaskElement = document.createElement('div');
-    newTaskElement.textContent = newTask.todoName;
-    todoList.appendChild(newTaskElement);
+    todos.forEach((todo) => {
+      const row = document.createElement("li");
+      row.className = todo.todoComplete ? "done" : "";
+      row.innerHTML = `
+        ${todo.todoText}
+        <span class="deleteBtn"><i class="fa fa-trash"></i></span>
+      `;
+
+      todoTable.appendChild(row);
+    });
   }
 });
-
-inputField.appendChild(addButton);
-
-
