@@ -1,4 +1,5 @@
 import "./styles.css";
+import { removeChildren } from "../utils/index.js";
 
 // initial todos
 
@@ -36,3 +37,39 @@ let todos = [
     todoDueDate: "Sept 2, 2023",
   },
 ];
+
+const inputField = document.querySelector('.inputField')
+const todoList = document.querySelector('.todoList')
+
+const addButton = document.createElement('button');
+addButton.textContent = 'Add Task';
+inputField.appendChild(addButton);
+
+addButton.addEventListener('click', async () => {
+  const todoName = inputField.value.trim();
+  if (todoName.length > 0) {
+    // Create a new task object
+    const newTask = {
+      todoID: todos.length,
+      todoName,
+      todoStatus: "Open",
+      todoCategory: "Uncategorized",
+      todoComplete: false,
+      todoDueDate: "Not specified",
+    };
+
+    // Add the new task to the todos array
+    todos.push(newTask);
+
+    // Clear the input field
+    inputField.value = '';
+
+    // You can also update the UI to display the new task here
+    // For example, create a new HTML element to represent the task and append it to the todoList
+    const newTaskElement = document.createElement('div');
+    newTaskElement.textContent = newTask.todoName;
+    todoList.appendChild(newTaskElement);
+  }
+});
+
+
