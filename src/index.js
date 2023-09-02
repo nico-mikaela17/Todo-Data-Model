@@ -1,8 +1,12 @@
 //import { removeChildren } from "/utils/index.js";
 
 // initial todos
+const form = document.querySelector(".form");
+const addButton = document.querySelector(".addButton");
+const inputField = document.querySelector(".inputField");
+const todoList = document.querySelector(".todoList");
 
-let todos = [
+const todos = [
   {
     todoID: 0,
     todoName: "Finish Homework",
@@ -37,57 +41,40 @@ let todos = [
   },
 ];
 
-const form = document.querySelector(".form");
-const addButton = document.querySelector("button[value=Add Task]");
-const formData = new FormData(form, addButton);
-
-const output = document.getElementById("output");
-
-for (const [todoID, todoName, todoStatus, todoCategory, todoComplete, todoDueDate] of formData) {
-  output.textContent += `${todoID}: ${value}\n `;
-}
-
-addButton.addEventListener("click", () => {
-  const todoText = inputField.value.trim();
-  if (todoText !== "") {
+addButton.addEventListener(onclick, () => {
     const newTodo = {
       todoID: todos.length,
-      todoText: todoText,
-      todoStatus: todoStatus,
-      todoCategory: todoCategory,
+      todoText: todos.todoName,
+      todoStatus: "Open",
+      todoCategory: todos.todoCategory, 
       todoComplete: false,
-      todoDueDate: todoDueDate,
+      todoDueDate: todos.todoDueDate, 
     };
+
     todos.push(newTodo);
-    inputField.value = "";
-    updateTable();
-  }})
-
-console.log(addButton)
-
-/*document.addEventListener("click", () => {
-  const inputField = document.querySelector(".inputField");
-  const addButton = document.querySelector(".addButton");
-  const todoTable = document.querySelector(".todoList");
-  const pendingTasksCount = document.querySelector(".footer span");
-  const clearDoneButton = document.querySelector(".footer button");
-
-  addButton.addEventListener("click", () => {
-    const todoText = inputField.value.trim();
-    if (todoText !== "") {
-      const newTodo = {
-        todoID: todos.length,
-        todoText: todoText,
-        todoStatus: todoStatus,
-        todoCategory: todoCategory,
-        todoComplete: false,
-        todoDueDate: todoDueDate,
-      };
-      todos.push(newTodo);
-      inputField.value = "";
-      updateTable();
-    }
   });
+
+  todoList.appendChild('.todoList')
+
+function updateTable() {
+  // Clear the previous content
+  output.textContent = "";
+
+  // Display the todos in the output element
+  todos.forEach((todo) => {
+    output.textContent += `${todo.todoID}: ${todo.todoText}\n`;
+  });
+}
+todos.forEach((todo) => {
+      const row = document.createElement("li");
+      row.className = todo.todoComplete ? "done" : "";
+      row.innerHTML = `
+        ${todo.todoText}
+        <span class="deleteBtn"><i class="fa fa-trash"></i></span>
+      `;
+
+      todoTable.appendChild(row);
+    });
 
   clearDoneButton.addEventListener("click", () => {
     todos = todos.filter((todo) => !todo.todoComplete);
@@ -108,4 +95,4 @@ console.log(addButton)
       todoTable.appendChild(row);
     });
   }
-});*/
+
