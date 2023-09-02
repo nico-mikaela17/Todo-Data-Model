@@ -37,7 +37,35 @@ let todos = [
   },
 ];
 
-document.addEventListener("click", () => {
+const form = document.querySelector(".form");
+const addButton = document.querySelector("button[value=Add Task]");
+const formData = new FormData(form, addButton);
+
+const output = document.getElementById("output");
+
+for (const [todoID, todoName, todoStatus, todoCategory, todoComplete, todoDueDate] of formData) {
+  output.textContent += `${todoID}: ${value}\n `;
+}
+
+addButton.addEventListener("click", () => {
+  const todoText = inputField.value.trim();
+  if (todoText !== "") {
+    const newTodo = {
+      todoID: todos.length,
+      todoText: todoText,
+      todoStatus: todoStatus,
+      todoCategory: todoCategory,
+      todoComplete: false,
+      todoDueDate: todoDueDate,
+    };
+    todos.push(newTodo);
+    inputField.value = "";
+    updateTable();
+  }})
+
+console.log(addButton)
+
+/*document.addEventListener("click", () => {
   const inputField = document.querySelector(".inputField");
   const addButton = document.querySelector(".addButton");
   const todoTable = document.querySelector(".todoList");
@@ -80,4 +108,4 @@ document.addEventListener("click", () => {
       todoTable.appendChild(row);
     });
   }
-});
+});*/

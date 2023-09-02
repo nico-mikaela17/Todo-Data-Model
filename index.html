@@ -9,10 +9,32 @@
   <body>
     <div class="wrapper">
       <header>To-do List</header>
-      <div class="inputField">
-        <input type="text" placeholder="Enter new task" />
-        <button class="addButton"><i class="fas fa-plus"></i></button>
-      </div>
+      <fieldset class="form">
+            <label class="tname">Task Name<input type="text" name="tname" required></label>
+            <label class="category">Category<select name="category">
+              <option value="">Please Select</option>
+              <option value="School">School</option>
+              <option value="work">Work</option>
+              <option value="chores">Chores</option>
+              <option value="dates">Dates</option>
+            </select>
+          </label>
+            <label class="tid">Task ID<input type="number" name="tid"></label>
+            <label class="date">Due Date<input type="date" name="date" required></label>
+            <label class="status">Status<select name="status">
+              <option value="">Please Select</option>
+              <option value="open">Open</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </label>
+        </fieldset>
+        
+        <input class="addButton" type="submit" value="Add Task">
+    </form>
+
+    <output id="output"></output>
+</main>
+</div>
       <!--<ul class="todoList">
         <li class="done">
           Todo Item 1 (Done example)<span> <i class="fa fa-trash"></i></span>

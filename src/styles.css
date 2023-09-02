@@ -3,6 +3,15 @@ header{
   font-weight: 600;
 }
 
+fieldset{
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+label{
+  padding: 0 0 2rem 0;
+}
 .wrapper{
   padding: 2rem;
 }
