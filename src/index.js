@@ -5,8 +5,9 @@ const form = document.querySelector(".form");
 const addButton = document.querySelector(".addButton");
 const inputField = document.querySelector(".inputField");
 const todoList = document.querySelector(".todoList");
+const clearDoneButton = document.querySelector(".clearDoneButton")
 
-const todos = [
+let todos = [
   {
     todoID: 0,
     todoName: "Finish Homework",
@@ -41,7 +42,9 @@ const todos = [
   },
 ];
 
-addButton.addEventListener(onclick, () => {
+addButton.addEventListener("click", () => {
+  const todoText = inputField.value.trim();
+  if (todoText !== "") {
     const newTodo = {
       todoID: todos.length,
       todoText: todos.todoName,
@@ -51,7 +54,23 @@ addButton.addEventListener(onclick, () => {
       todoDueDate: todos.todoDueDate, 
     };
 
+    todos.forEach((todo) => {
+      const row = document.createElement("li");
+      row.className = todo.todoComplete ? false : "";
+      row.innerHTML = `
+        ${todo.todoText}
+        <span class="deleteBtn"><i class="fa fa-trash"></i></span>
+      `;
+  
+      todoList.appendChild(row);
+    });
+  }
+  
     todos.push(newTodo);
+    inputField.value = '';
+    const newTodoElement = document.createElement('li');
+    newTodoElement.textContent = newTodo.todoText;
+    todoList.appendChild(newTodoElement);
   });
 
   todoList.appendChild('.todoList')
