@@ -8,5 +8,9 @@ header{
 }
 
 .inputField{
-  margin-top: 2rem;
+  margin: 2rem 0;
+}
+
+footer{
+  bottom: 10px;
 }

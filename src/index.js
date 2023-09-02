@@ -40,9 +40,8 @@ let todos = [
 
 const inputField = document.querySelector('.inputField')
 const todoList = document.querySelector('.todoList')
+const addButton = document.querySelector('.fas fa-plus')
 
-const addButton = document.createElement('button');
-addButton.textContent = 'Add Task';
 inputField.appendChild(addButton);
 
 addButton.addEventListener('click', async () => {
