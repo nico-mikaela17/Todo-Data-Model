@@ -3,38 +3,40 @@
   <head>
     <title>To-do List: Nicole</title>
     <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/src/styles.css" />
   </head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
-  <link rel="stylesheet" href="/src/styles.css"/>
   <body>
-    <div class="wrapper">
-      <header>To-do List</header>
-      <fieldset class="form">
-            <label class="tname">Task Name<input type="text" name="tname" required></label>
-            <label class="category">Category<select name="category">
-              <option value="">Please Select</option>
-              <option value="School">School</option>
-              <option value="work">Work</option>
-              <option value="chores">Chores</option>
-              <option value="dates">Dates</option>
-            </select>
-          </label>
-           <!--<label class="tid">Task ID<input type="number" name="tid"></label>--> 
-            <label class="date">Due Date<input type="date" name="date" required></label>
-           <!--<label class="status">Status<select name="status">
-              <option value="">Please Select</option>
-              <option value="open">Open</option>
-              <option value="Completed">Completed</option>
-            </select>
-          </label>-->
-        </fieldset>
-        
-        <input class="addButton" type="submit" value="Add Task">
-    </form>  
-    </div>
-    <div class="todoList"><output id="output"></output></div>  
-</main>
-      <!--<ul class="todoList">
+    <header>To-do List</header>
+    <main>
+      <div id="taskForm">
+        <input id="tName" type="text" placeholder="Task Name" />
+
+        <p>Category</p>
+        <select id="taskCategory">
+          <!-- <option value="">Please Select</option>
+          <option value="school">School</option>
+          <option value="work">Work</option>
+          <option value="chores">Chores</option>
+          <option value="dates">Dates</option> -->
+        </select>
+
+        <p>Due Date</p>
+        <input type="date" id="dueDate" value="" />
+
+        <button id="createTask">Create Task</button>
+      </div>
+      <div id="createCategorySection">
+        <input id="newCategoryItem" type="text" placeholder="New Category" />
+        <input type="color" id="colorCategory" value="#304c89" />
+        <button id="createCategoryBtn">Add Category</button>
+      </div>
+      <div id="todoList"></div>
+    </main>
+    <!--<ul class="todoList">
         <li class="done">
           Todo Item 1 (Done example)<span> <i class="fa fa-trash"></i></span>
         </li>
@@ -44,10 +46,9 @@
           <span> <i class="fa fa-trash"></i></span>
         </li>
       </ul>-->
-      <div class="footer">
-        <span>You have 1 pending tasks.</span>
-        <button class="clearDoneButton">Clear Done</button>
-      </div>
+    <div class="footer">
+      <span>You have 1 pending tasks.</span>
+      <button id="clearDoneButton">Clear Done</button>
     </div>
     <footer>Created by Nicole Linnarz</footer>
 

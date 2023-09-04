@@ -1,117 +1,105 @@
-//import { removeChildren } from "/utils/index.js";
+let form = document.querySelector("#taskForm");
+let clearDoneButton = document.querySelector("#clearDoneButton");
 
-// initial todos
-const form = document.querySelector(".form");
-const addButton = document.querySelector(".addButton");
-const inputField = document.querySelector(".inputField");
-const todoList = document.querySelector(".todoList");
-const clearDoneButton = document.querySelector(".clearDoneButton")
+let categories = [
+  { name: "School", color: "#275d38" },
 
+  { name: "Work", color: "#0065A4" },
+
+  { name: "Chores", color: "#ffd60a" },
+
+  { name: "Dates", color: "#c9184a" },
+];
 let todos = [
   {
     todoID: 0,
     todoName: "Finish Homework",
-    todoStatus: "Completed",
     todoCategory: "School",
     todoComplete: true,
-    todoDueDate: "Sept 2, 2023",
-  },
-  {
-    todoID: 1,
-    todoName: "Groceries",
-    todoStatus: "Open",
-    todoCategory: "Chores",
-    todoComplete: false,
-    todoDueDate: "Sept 5, 2023",
-  },
-  {
-    todoID: 2,
-    todoName: "Clean the house",
-    todoStatus: "Open",
-    todoCategory: "Chores",
-    todoComplete: false,
-    todoDueDate: "Sept 3, 2023",
-  },
-  {
-    todoID: 3,
-    todoName: "Real Salt Lake game",
-    todoStatus: "Open",
-    todoCategory: "Dates",
-    todoComplete: false,
-    todoDueDate: "Sept 2, 2023",
+    todoDueDate: "2023-09-02",
   },
 ];
 
-addButton.addEventListener("click", () => {
-  const todoText = inputField.value.trim();
-  if (todoText !== "") {
-    const newTodo = {
-      todoID: todos.length,
-      todoText: todos.todoName,
-      todoStatus: "Open",
-      todoCategory: todos.todoCategory, 
-      todoComplete: false,
-      todoDueDate: todos.todoDueDate, 
-    };
+function showCategories() {
+  let taskCategory = document.querySelector("#taskCategory");
+  taskCategory.innerHTML = '<option value="">Please Select</option>';
 
-    todos.forEach((todo) => {
-      const row = document.createElement("li");
-      row.className = todo.todoComplete ? false : "";
-      row.innerHTML = `
-        ${todo.todoText}
-        <span class="deleteBtn"><i class="fa fa-trash"></i></span>
-      `;
-  
-      todoList.appendChild(row);
-    });
+  for (let category in categories) {
+    let newCategoryName = document.createElement("option");
+    newCategoryName.value = categories[category].name;
+    newCategoryName.textContent = categories[category].name;
+
+    taskCategory.appendChild(newCategoryName);
   }
-  
-    todos.push(newTodo);
-    inputField.value = '';
-    const newTodoElement = document.createElement('li');
-    newTodoElement.textContent = newTodo.todoText;
-    todoList.appendChild(newTodoElement);
-  });
-
-  todoList.appendChild('.todoList')
-
-function updateTable() {
-  // Clear the previous content
-  output.textContent = "";
-
-  // Display the todos in the output element
-  todos.forEach((todo) => {
-    output.textContent += `${todo.todoID}: ${todo.todoText}\n`;
-  });
 }
-todos.forEach((todo) => {
-      const row = document.createElement("li");
-      row.className = todo.todoComplete ? "done" : "";
-      row.innerHTML = `
-        ${todo.todoText}
-        <span class="deleteBtn"><i class="fa fa-trash"></i></span>
-      `;
 
-      todoTable.appendChild(row);
-    });
+showCategories();
 
-  clearDoneButton.addEventListener("click", () => {
-    todos = todos.filter((todo) => !todo.todoComplete);
-    updateTable();
-  });
+function showTasks() {
+  let todoList = document.querySelector("#todoList");
+  todoList.innerHTML = "";
 
-  function updateTable() {
-    todoTable.innerHTML = "";
+  for (let task in todos) {
+    //loop
+    let taskItem = document.createElement("article"); //create item
 
-    todos.forEach((todo) => {
-      const row = document.createElement("li");
-      row.className = todo.todoComplete ? "done" : "";
-      row.innerHTML = `
-        ${todo.todoText}
-        <span class="deleteBtn"><i class="fa fa-trash"></i></span>
-      `;
+    let taskName = document.createElement("h3");
+    taskName.textContent = todos[task].todoText; //add text content
+    taskItem.appendChild(taskName);
 
-      todoTable.appendChild(row);
-    });
+    let taskCategory = document.createElement("h4");
+    taskCategory.textContent = todos[task].todoCategory;
+    taskItem.appendChild(taskCategory);
+
+    let taskDate = document.createElement("p");
+    taskDate.textContent = todos[task].todoDueDate;
+    taskItem.appendChild(taskDate);
+
+    todoList.appendChild(taskItem);
   }
+}
 
+showTasks();
+
+let createBtn = document.querySelector("#createTask");
+
+function createTask() {
+  let newText = document.querySelector("#tName");
+  let dueDate = document.querySelector("#dueDate");
+
+  let newTodo = {
+    todoID: todos.length,
+    todoText: newText.value,
+    todoCategory: taskCategory.value,
+    todoComplete: false,
+    todoDueDate: dueDate.value,
+  };
+
+  todos.push(newTodo);
+  console.log(todos);
+  showTasks();
+}
+
+createBtn.addEventListener("click", () => {
+  createTask();
+});
+
+let createCategoryBtn = document.querySelector("#createCategoryBtn");
+
+function createNewCategory() {
+  let newCategoryItem = document.querySelector("#newCategoryItem");
+  let colorCategory = document.querySelector("#colorCategory");
+
+  let newCategory = {
+    name: newCategoryItem.value,
+    color: colorCategory.value,
+  };
+
+  categories.push(newCategory);
+  console.log(categories);
+  showCategories()
+}
+
+createCategoryBtn.addEventListener("click", () => {
+  createNewCategory();
+});
