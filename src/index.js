@@ -1,5 +1,6 @@
 let form = document.querySelector("#taskForm");
 let clearDoneButton = document.querySelector("#clearDoneButton");
+let taskCategory = document.querySelector("#taskCategory");
 
 let categories = [
   { name: "School", color: "#275d38" },
@@ -10,18 +11,18 @@ let categories = [
 
   { name: "Dates", color: "#c9184a" },
 ];
+
 let todos = [
   {
     todoID: 0,
     todoName: "Finish Homework",
-    todoCategory: "School",
+    todoCategory: categories[0],
     todoComplete: true,
     todoDueDate: "2023-09-02",
   },
 ];
 
 function showCategories() {
-  let taskCategory = document.querySelector("#taskCategory");
   taskCategory.innerHTML = '<option value="">Please Select</option>';
 
   for (let category in categories) {
@@ -42,18 +43,20 @@ function showTasks() {
   for (let task in todos) {
     //loop
     let taskItem = document.createElement("article"); //create item
+    taskItem.style.backgroundColor = todos[task].todoCategory.color
 
     let taskName = document.createElement("h3");
-    taskName.textContent = todos[task].todoText; //add text content
+    taskName.textContent = todos[task].todoName; //add text content
     taskItem.appendChild(taskName);
 
     let taskCategory = document.createElement("h4");
-    taskCategory.textContent = todos[task].todoCategory;
+    taskCategory.textContent = todos[task].todoCategory.name;
     taskItem.appendChild(taskCategory);
 
     let taskDate = document.createElement("p");
     taskDate.textContent = todos[task].todoDueDate;
     taskItem.appendChild(taskDate);
+
 
     todoList.appendChild(taskItem);
   }
@@ -66,11 +69,18 @@ let createBtn = document.querySelector("#createTask");
 function createTask() {
   let newText = document.querySelector("#tName");
   let dueDate = document.querySelector("#dueDate");
+  let newCategory = {}
+  
+  for(let category in categories) {
+    if (taskCategory.value === categories[category].name) {
+      newCategory = categories[category]
+    }
+  }
 
   let newTodo = {
     todoID: todos.length,
-    todoText: newText.value,
-    todoCategory: taskCategory.value,
+    todoName: newText.value,
+    todoCategory: newCategory,
     todoComplete: false,
     todoDueDate: dueDate.value,
   };
