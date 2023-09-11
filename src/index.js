@@ -47,14 +47,17 @@ function showTasks() {
 
     let taskName = document.createElement("h3");
     taskName.textContent = todos[task].todoName; //add text content
+    taskName.style.backgroundColor = todos [task].todoCategory.color
     taskItem.appendChild(taskName);
 
     let taskCategory = document.createElement("h4");
     taskCategory.textContent = todos[task].todoCategory.name;
+    taskCategory.style.backgroundColor = todos [task].todoCategory.color
     taskItem.appendChild(taskCategory);
 
     let taskDate = document.createElement("p");
     taskDate.textContent = todos[task].todoDueDate;
+    taskDate.style.backgroundColor = todos [task].todoCategory.color
     taskItem.appendChild(taskDate);
 
 

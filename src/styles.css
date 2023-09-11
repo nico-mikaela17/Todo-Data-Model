@@ -1,15 +1,30 @@
 *{
   background-color: #d9d9d9;
+  margin-left: 0.3rem;
 }
 header{
   font-size: xxx-large;
   font-weight: 600;
+  font-family: 'Bebas Neue', sans-serif;
+  text-align: center;
 }
 
+h3, p{
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+::placeholder{
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+#todoList{
+width: auto;
+}
 article{
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  width: 15rem;
 }
 
 label{
