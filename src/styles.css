@@ -1,43 +1,89 @@
-*{
-  background-color: #d9d9d9;
+* {
+  background-color: #eaeaea;
   margin-left: 0.3rem;
 }
-header{
+header {
   font-size: xxx-large;
   font-weight: 600;
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   text-align: center;
 }
 
-h3, p{
-  font-family: 'Barlow Condensed', sans-serif;
+h3,
+h4,
+p {
+  font-family: "Barlow Condensed", sans-serif;
 }
 
-::placeholder{
-  font-family: 'Barlow Condensed', sans-serif;
-}
-
-#todoList{
-width: auto;
-}
-article{
+#taskForm {
   display: flex;
-  flex-direction: column;
-  padding: 1rem;
-  width: 15rem;
 }
 
-label{
-  padding: 0 0 2rem 0;
+#tName, #dueDate, #taskCategory {
+  width: auto;
+  height: 20px;
+  display: flex;
+  align-self: center;
 }
-.wrapper{
+
+.tName, .dueDate, .taskCategory{
+  margin-left: 1rem;
+}
+
+::placeholder {
+  font-family: "Barlow Condensed", sans-serif;
+}
+
+#createTask{
+  font-size: large;
+  font-weight: 600;
+  font-family: "Bebas Neue", sans-serif;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  align-self: flex-end;
+  margin-left: 2rem;
+  border-radius: 5px;
+  padding: 0.5rem;
+}
+
+#createTask:hover{
+  background: rgb(39,93,56);
+background: radial-gradient(circle, rgba(39,93,56,1) 0%, rgba(0,101,164,1) 75%, rgba(157,78,221,1) 100%);
+  color: white;
+}
+
+#createCategorySection{
+margin-top: 2rem;
+}
+#todoList {
+  width: auto;
+  display: flex;
   padding: 2rem;
 }
 
-.inputField{
+article {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  padding: 1rem;
+  width: 10rem;
+  display: block;
+  border-style: double;
+  border-width: 10px;
+}
+
+label {
+  padding: 0 0 2rem 0;
+}
+.wrapper {
+  padding: 2rem;
+}
+
+.inputField {
   margin: 2rem 0;
 }
 
-footer{
+footer {
   bottom: 10px;
 }

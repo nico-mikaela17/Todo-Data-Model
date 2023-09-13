@@ -7,7 +7,7 @@ let categories = [
 
   { name: "Work", color: "#0065A4" },
 
-  { name: "Chores", color: "#ffd60a" },
+  { name: "Chores", color: "#9d4edd" },
 
   { name: "Dates", color: "#c9184a" },
 ];
@@ -43,21 +43,21 @@ function showTasks() {
   for (let task in todos) {
     //loop
     let taskItem = document.createElement("article"); //create item
-    taskItem.style.backgroundColor = todos[task].todoCategory.color
+    taskItem.style.borderColor = todos[task].todoCategory.color
 
     let taskName = document.createElement("h3");
     taskName.textContent = todos[task].todoName; //add text content
-    taskName.style.backgroundColor = todos [task].todoCategory.color
+    taskName.style.color = todos [task].todoCategory.color
     taskItem.appendChild(taskName);
 
     let taskCategory = document.createElement("h4");
     taskCategory.textContent = todos[task].todoCategory.name;
-    taskCategory.style.backgroundColor = todos [task].todoCategory.color
+    taskCategory.style.color = todos [task].todoCategory.color
     taskItem.appendChild(taskCategory);
 
     let taskDate = document.createElement("p");
     taskDate.textContent = todos[task].todoDueDate;
-    taskDate.style.backgroundColor = todos [task].todoCategory.color
+    taskDate.style.color = todos [task].todoCategory.color
     taskItem.appendChild(taskDate);
 
 
