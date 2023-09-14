@@ -66,11 +66,20 @@ function showTasks() {
     removeTaskBtn.style.color = todos[task].todoCategory.color;
     taskItem.appendChild(removeTaskBtn);
 
+    removeTaskBtn.addEventListener('click', function(removeTaskFromList) {
+      alert('Button clicked!');
+  });
+
+    
     todoList.appendChild(taskItem);
   }
 }
 
 showTasks();
+
+
+
+//removeTaskBtn.onclick = remove(taskItem)
 
 /*if (removeTask.addEventListener("click")) {
   task.todoList.removeChild(task);
@@ -135,4 +144,23 @@ createCategoryBtn.addEventListener("click", () => {
   })
 }*/
 
+/*clearDoneButton.addEventListener("click", () => {
+  todos = todos.filter((todo) => !todo.todoComplete);
+  updateTable();
+});
 
+function updateTable() {
+  todoTable.innerHTML = "";
+
+  todos.forEach((todo) => {
+    const row = document.createElement("li");
+    row.className = todo.todoComplete ? "done" : "";
+    row.innerHTML = `
+      ${todo.todoText}
+      <span class="deleteBtn"><i class="fa fa-trash"></i></span>
+    `;
+
+    todoTable.appendChild(row);
+  });
+}
+});*/

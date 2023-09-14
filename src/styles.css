@@ -15,6 +15,11 @@ p {
   font-family: "Barlow Condensed", sans-serif;
 }
 
+.createCategoryText{
+  margin-bottom: 0;
+  margin-top: 4rem;
+}
+
 #taskForm {
   display: flex;
 }
