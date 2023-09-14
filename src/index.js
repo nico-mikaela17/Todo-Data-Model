@@ -41,29 +41,35 @@ function showTasks() {
   todoList.innerHTML = "";
 
   for (let task in todos) {
+    //creation of the article/task
     //loop
     let taskItem = document.createElement("article"); //create item
-    taskItem.style.borderColor = todos[task].todoCategory.color
+    taskItem.style.borderColor = todos[task].todoCategory.color;
 
     let taskName = document.createElement("h3");
     taskName.textContent = todos[task].todoName; //add text content
-    taskName.style.color = todos [task].todoCategory.color
+    taskName.style.color = todos[task].todoCategory.color;
     taskItem.appendChild(taskName);
 
     let taskCategory = document.createElement("h4");
     taskCategory.textContent = todos[task].todoCategory.name;
-    taskCategory.style.color = todos [task].todoCategory.color
+    taskCategory.style.color = todos[task].todoCategory.color;
     taskItem.appendChild(taskCategory);
 
     let taskDate = document.createElement("p");
     taskDate.textContent = todos[task].todoDueDate;
-    taskDate.style.color = todos [task].todoCategory.color
+    taskDate.style.color = todos[task].todoCategory.color;
     taskItem.appendChild(taskDate);
 
+    let removeTask = document.createElement("button");
+    removeTask.textContent = "Delete";
+    removeTask.style.color = todos[task].todoCategory.color;
+    taskItem.appendChild(removeTask);
 
     todoList.appendChild(taskItem);
   }
 }
+//let removeTaskFromList =  todoList.removeChild(taskItem)
 
 showTasks();
 
@@ -72,11 +78,11 @@ let createBtn = document.querySelector("#createTask");
 function createTask() {
   let newText = document.querySelector("#tName");
   let dueDate = document.querySelector("#dueDate");
-  let newCategory = {}
-  
-  for(let category in categories) {
+  let newCategory = {};
+
+  for (let category in categories) {
     if (taskCategory.value === categories[category].name) {
-      newCategory = categories[category]
+      newCategory = categories[category];
     }
   }
 
@@ -110,7 +116,7 @@ function createNewCategory() {
 
   categories.push(newCategory);
   console.log(categories);
-  showCategories()
+  showCategories();
 }
 
 createCategoryBtn.addEventListener("click", () => {

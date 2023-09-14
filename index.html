@@ -20,30 +20,39 @@
     <main>
       <div id="taskForm">
         <div class="tName">
-        <h3>Choose a Task Name</h3>
-        <input id="tName" type="text" placeholder="Task Name" />
-      </div>
-      <div class="taskCategory">
-        <h3>Category</h3>
-        <select id="taskCategory">
-          <!-- <option value="">Please Select</option>
+          <h3>Choose a Task Name</h3>
+          <input id="tName" type="text" placeholder="Task Name" />
+        </div>
+        <div class="taskCategory">
+          <h3>Category</h3>
+          <select id="taskCategory">
+            <!-- <option value="">Please Select</option>
           <option value="school">School</option>
           <option value="work">Work</option>
           <option value="chores">Chores</option>
           <option value="dates">Dates</option> -->
-        </select>
-</div>
-<div class="dueDate">
-        <h3>Due Date</h3>
-        <input type="date" id="dueDate" value="" />
-</div>
+          </select>
+        </div>
+        <div class="dueDate">
+          <h3>Due Date</h3>
+          <input type="date" id="dueDate" value="" />
+        </div>
         <button id="createTask">Create Task</button>
       </div>
+
       <div id="createCategorySection">
         <h3>Create your own category</h3>
-        <input id="newCategoryItem" type="text" placeholder="New Category" />
-        <input type="color" id="colorCategory" value="#304c89" />
-        <button id="createCategoryBtn">Add Category</button>
+        <div class="createCategorySection">
+          <div class="createCategoryInput">
+            <input
+              id="newCategoryItem"
+              type="text"
+              placeholder="New Category"
+            />
+            <input type="color" id="colorCategory" value="#304c89" />
+          </div>
+          <button id="createCategoryBtn">Add Category</button>
+        </div>
       </div>
       <div id="todoList"></div>
     </main>

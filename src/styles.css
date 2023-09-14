@@ -19,22 +19,47 @@ p {
   display: flex;
 }
 
-#tName, #dueDate, #taskCategory {
+#tName,
+#dueDate,
+#taskCategory,
+.createCategoryInput {
   width: auto;
   height: 20px;
   display: flex;
   align-self: center;
 }
 
-.tName, .dueDate, .taskCategory{
+.createCategorySection {
+  width: auto;
+  display: flex;
+  align-self: center;
+}
+
+.tName,
+.dueDate,
+.taskCategory,
+#createCategorySection {
   margin-left: 1rem;
 }
 
-::placeholder {
-  font-family: "Barlow Condensed", sans-serif;
+#newCategoryItem{
+  margin: 0;
 }
 
-#createTask{
+#colorCategory{
+  margin-left: 1.5rem;
+}
+
+::placeholder,
+#taskCategory,
+#dueDate {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: medium;
+}
+
+#createTask,
+#createCategoryBtn,
+#clearDoneButton {
   font-size: large;
   font-weight: 600;
   font-family: "Bebas Neue", sans-serif;
@@ -47,15 +72,19 @@ p {
   padding: 0.5rem;
 }
 
-#createTask:hover{
-  background: rgb(39,93,56);
-background: radial-gradient(circle, rgba(39,93,56,1) 0%, rgba(0,101,164,1) 75%, rgba(157,78,221,1) 100%);
+#createTask:hover,
+#createCategoryBtn:hover,
+#clearDoneButton:hover {
+  background: rgb(39, 93, 56);
+  background: radial-gradient(
+    circle,
+    rgba(39, 93, 56, 1) 0%,
+    rgba(0, 101, 164, 1) 75%,
+    rgba(157, 78, 221, 1) 100%
+  );
   color: white;
 }
 
-#createCategorySection{
-margin-top: 2rem;
-}
 #todoList {
   width: auto;
   display: flex;
@@ -80,9 +109,7 @@ label {
   padding: 2rem;
 }
 
-.inputField {
-  margin: 2rem 0;
-}
+
 
 footer {
   bottom: 10px;
