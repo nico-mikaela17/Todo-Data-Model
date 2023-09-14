@@ -164,3 +164,7 @@ function updateTable() {
   });
 }
 });*/
+
+let pendingTasksCounterArea = document.getElementById('#pendingTasksCounter')
+
+let pendingTasksCounter = showTasks().reduce((todoComplete, task) => todos.todoComplete > task.todoComplete ? todoComplete : task)
