@@ -19,12 +19,13 @@ p {
   display: flex;
 }
 
-#tName,
+#tName input,
 #dueDate,
 #taskCategory,
+#taskCategory::selection
 .createCategoryInput {
   width: auto;
-  height: 20px;
+  height: 26px;
   display: flex;
   align-self: center;
 }
@@ -33,6 +34,10 @@ p {
   width: auto;
   display: flex;
   align-self: center;
+}
+
+.tName, .taskCategory, .createCategoryInput{
+  align-self: flex-end;
 }
 
 .tName,
@@ -55,21 +60,22 @@ p {
 #dueDate {
   font-family: "Barlow Condensed", sans-serif;
   font-size: medium;
+  padding: 2px;
 }
 
-#createTask,
-#createCategoryBtn,
-#clearDoneButton {
+button{
   font-size: large;
   font-weight: 600;
   font-family: "Bebas Neue", sans-serif;
-  text-align: center;
-  height: 100%;
   display: flex;
   align-self: flex-end;
   margin-left: 2rem;
   border-radius: 5px;
   padding: 0.5rem;
+}
+
+article button{
+  text-align: left;
 }
 
 #createTask:hover,
@@ -89,6 +95,7 @@ p {
   width: auto;
   display: flex;
   padding: 2rem;
+  flex-wrap: wrap;
 }
 
 article {

@@ -47,31 +47,36 @@ function showTasks() {
     taskItem.style.borderColor = todos[task].todoCategory.color;
 
     let taskName = document.createElement("h3");
-    taskName.textContent = todos[task].todoName; //add text content
+    taskName.textContent = todos[task].todoName; //task title
     taskName.style.color = todos[task].todoCategory.color;
     taskItem.appendChild(taskName);
 
-    let taskCategory = document.createElement("h4");
+    let taskCategory = document.createElement("h4"); //task category
     taskCategory.textContent = todos[task].todoCategory.name;
     taskCategory.style.color = todos[task].todoCategory.color;
     taskItem.appendChild(taskCategory);
 
-    let taskDate = document.createElement("p");
+    let taskDate = document.createElement("p"); //due date
     taskDate.textContent = todos[task].todoDueDate;
     taskDate.style.color = todos[task].todoCategory.color;
     taskItem.appendChild(taskDate);
 
-    let removeTask = document.createElement("button");
-    removeTask.textContent = "Delete";
-    removeTask.style.color = todos[task].todoCategory.color;
-    taskItem.appendChild(removeTask);
+    let removeTaskBtn = document.createElement("button"); //delete button
+    removeTaskBtn.textContent = "Delete";
+    removeTaskBtn.style.color = todos[task].todoCategory.color;
+    taskItem.appendChild(removeTaskBtn);
 
     todoList.appendChild(taskItem);
   }
 }
-//let removeTaskFromList =  todoList.removeChild(taskItem)
 
 showTasks();
+
+/*if (removeTask.addEventListener("click")) {
+  task.todoList.removeChild(task);
+}*/
+
+//let removeTaskFromList =  todoList.removeChild(taskItem)
 
 let createBtn = document.querySelector("#createTask");
 
@@ -122,3 +127,12 @@ function createNewCategory() {
 createCategoryBtn.addEventListener("click", () => {
   createNewCategory();
 });
+
+/*function removeTask() {
+  todoList.pop(taskItem);
+  removeTaskBtn.addEventListener("click", () => {
+    removeTask();
+  })
+}*/
+
+
