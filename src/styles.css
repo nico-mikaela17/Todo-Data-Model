@@ -15,7 +15,7 @@ p {
   font-family: "Barlow Condensed", sans-serif;
 }
 
-.createCategoryText{
+.createCategoryText {
   margin-bottom: 0;
   margin-top: 4rem;
 }
@@ -27,8 +27,7 @@ p {
 #tName input,
 #dueDate,
 #taskCategory,
-#taskCategory::selection
-.createCategoryInput {
+#taskCategory::selection .createCategoryInput {
   width: auto;
   height: 26px;
   display: flex;
@@ -41,7 +40,9 @@ p {
   align-self: center;
 }
 
-.tName, .taskCategory, .createCategoryInput{
+.tName,
+.taskCategory,
+.createCategoryInput {
   align-self: flex-end;
 }
 
@@ -52,11 +53,11 @@ p {
   margin-left: 1rem;
 }
 
-#newCategoryItem{
+#newCategoryItem {
   margin: 0;
 }
 
-#colorCategory{
+#colorCategory {
   margin-left: 1.5rem;
 }
 
@@ -68,7 +69,7 @@ p {
   padding: 2px;
 }
 
-button{
+button {
   font-size: large;
   font-weight: 600;
   font-family: "Bebas Neue", sans-serif;
@@ -79,7 +80,7 @@ button{
   padding: 0.5rem;
 }
 
-article button{
+article button {
   text-align: left;
 }
 
@@ -120,8 +121,6 @@ label {
 .wrapper {
   padding: 2rem;
 }
-
-
 
 footer {
   bottom: 10px;

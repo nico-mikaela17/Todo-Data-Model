@@ -63,22 +63,24 @@ function showTasks() {
 
     let removeTaskBtn = document.createElement("button"); //delete button
     removeTaskBtn.textContent = "Delete";
+    removeTaskBtn.setAttribute("id", "removeTaskBtn");
     removeTaskBtn.style.color = todos[task].todoCategory.color;
     taskItem.appendChild(removeTaskBtn);
 
-    removeTaskBtn.addEventListener('click', function(removeTaskFromList) {
-      alert('Button clicked!');
-  });
+    //removeTaskBtn.addEventListener('click', function(removeTaskFromList) {
+    //  alert('Button clicked!');
+    // });
 
-    
     todoList.appendChild(taskItem);
   }
 }
 
 showTasks();
 
-
-
+function removeItem(taskItem) {
+  var itemToRemove = taskItem;
+  taskItem.parentNode.removeChild(taskItem);
+}
 //removeTaskBtn.onclick = remove(taskItem)
 
 /*if (removeTask.addEventListener("click")) {
@@ -137,34 +139,19 @@ createCategoryBtn.addEventListener("click", () => {
   createNewCategory();
 });
 
-/*function removeTask() {
-  todoList.pop(taskItem);
-  removeTaskBtn.addEventListener("click", () => {
-    removeTask();
-  })
-}*/
+/*function updateTable() {
+  todoList.innerHTML = "";}
 
-/*clearDoneButton.addEventListener("click", () => {
+let pendingTasksCount = document.querySelector(".footer span");
+clearDoneButton.addEventListener("click", () => {
   todos = todos.filter((todo) => !todo.todoComplete);
   updateTable();
 });
 
-function updateTable() {
-  todoTable.innerHTML = "";
+let removeTask = document.getElementById('#removeTaskBtn');
+removeTask.addEventListener("click", () => {
+    removeTask(todoList);
 
-  todos.forEach((todo) => {
-    const row = document.createElement("li");
-    row.className = todo.todoComplete ? "done" : "";
-    row.innerHTML = `
-      ${todo.todoText}
-      <span class="deleteBtn"><i class="fa fa-trash"></i></span>
-    `;
-
-    todoTable.appendChild(row);
   });
-}
-});*/
 
-let pendingTasksCounterArea = document.getElementById('#pendingTasksCounter')
-
-let pendingTasksCounter = showTasks().reduce((todoComplete, task) => todos.todoComplete > task.todoComplete ? todoComplete : task)
+updateTable()*/
