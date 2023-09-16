@@ -80,6 +80,8 @@ function showTasks() {
     } else {
       taskItem.style.color = todos[task].todoCategory.color;
     }
+    taskItem.contentEditable = true;
+    
     let removeTaskBtn = document.createElement("button"); //delete button
     removeTaskBtn.innerHTML = '<i class="fa-solid fa-delete-left"></i>';
     if (todos[task].todoComplete === true) {
