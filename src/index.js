@@ -1,5 +1,5 @@
 let form = document.querySelector("#taskForm");
-let clearDoneButton = document.querySelector("#clearDoneButton");
+
 let taskCategory = document.querySelector("#taskCategory");
 
 let categories = [
@@ -17,8 +17,29 @@ let todos = [
     todoID: 0,
     todoName: "Finish Homework",
     todoCategory: categories[0],
-    todoComplete: true,
+    todoComplete: false,
     todoDueDate: "2023-09-02",
+  },
+  {
+    todoID: 1,
+    todoName: "Collections List",
+    todoCategory: categories[1],
+    todoComplete: false,
+    todoDueDate: "2023-09-18",
+  },
+  {
+    todoID: 2,
+    todoName: "Mop the kitchen",
+    todoCategory: categories[2],
+    todoComplete: false,
+    todoDueDate: "2023-09-13",
+  },
+  {
+    todoID: 3,
+    todoName: "Trip to Maryland",
+    todoCategory: categories[3],
+    todoComplete: false,
+    todoDueDate: "2023-09-21",
   },
 ];
 
@@ -36,6 +57,16 @@ function showCategories() {
 
 showCategories();
 
+function countIncompleteTasks() {
+  let count = 0;
+  for (let task in todos) {
+    if (todos[task].todoComplete === false) {
+      count++;
+    }
+  }
+  return count;
+}
+
 function showTasks() {
   let todoList = document.querySelector("#todoList");
   todoList.innerHTML = "";
@@ -44,51 +75,80 @@ function showTasks() {
     //creation of the article/task
     //loop
     let taskItem = document.createElement("article"); //create item
-    taskItem.style.borderColor = todos[task].todoCategory.color;
+    if (todos[task].todoComplete === true) {
+      taskItem.style.color = "#000";
+    } else {
+      taskItem.style.color = todos[task].todoCategory.color;
+    }
+    let removeTaskBtn = document.createElement("button"); //delete button
+    removeTaskBtn.innerHTML = '<i class="fa-solid fa-delete-left"></i>';
+    if (todos[task].todoComplete === true) {
+      removeTaskBtn.style.color = "#000";
+    } else {
+      removeTaskBtn.style.color = todos[task].todoCategory.color;
+    }
+    removeTaskBtn.style.border = "none";
+    removeTaskBtn.style.float = "right";
+    removeTaskBtn.style.cursor = "pointer";
+    removeTaskBtn.onclick = function () {
+      removeTaskFromList(todos[task].todoID);
+    };
+    taskItem.appendChild(removeTaskBtn);
 
     let taskName = document.createElement("h3");
     taskName.textContent = todos[task].todoName; //task title
-    taskName.style.color = todos[task].todoCategory.color;
+
+    if (todos[task].todoComplete === true) {
+      taskName.style.color = "#000";
+    } else {
+      taskName.style.color = todos[task].todoCategory.color;
+    }
+
     taskItem.appendChild(taskName);
 
     let taskCategory = document.createElement("h4"); //task category
     taskCategory.textContent = todos[task].todoCategory.name;
-    taskCategory.style.color = todos[task].todoCategory.color;
+    if (todos[task].todoComplete === true) {
+      taskCategory.style.color = "#000";
+    } else {
+      taskCategory.style.color = todos[task].todoCategory.color;
+    }
     taskItem.appendChild(taskCategory);
 
     let taskDate = document.createElement("p"); //due date
     taskDate.textContent = todos[task].todoDueDate;
-    taskDate.style.color = todos[task].todoCategory.color;
+    if (todos[task].todoComplete === true) {
+      taskDate.style.color = "#000";
+    } else {
+      taskDate.style.color = todos[task].todoCategory.color;
+    }
     taskItem.appendChild(taskDate);
 
-    let removeTaskBtn = document.createElement("button"); //delete button
-    removeTaskBtn.textContent = "Delete";
-    removeTaskBtn.setAttribute("id", "removeTaskBtn");
-    removeTaskBtn.style.color = todos[task].todoCategory.color;
-    taskItem.appendChild(removeTaskBtn);
-
-    //removeTaskBtn.addEventListener('click', function(removeTaskFromList) {
-    //  alert('Button clicked!');
-    // });
+    let markAsDoneBtn = document.createElement("button"); //delete button
+    markAsDoneBtn.innerHTML = '<i class="fa-solid fa-square-check"></i>';
+    if (todos[task].todoComplete === true) {
+      markAsDoneBtn.style.color = "#000";
+    } else {
+      markAsDoneBtn.style.color = todos[task].todoCategory.color;
+    }
+    markAsDoneBtn.style.border = "none";
+    markAsDoneBtn.style.float = "right";
+    markAsDoneBtn.style.cursor = "pointer";
+    markAsDoneBtn.onclick = function () {
+      markingTaskAsDone(todos[task].todoID);
+    };
+    taskItem.appendChild(markAsDoneBtn);
 
     todoList.appendChild(taskItem);
   }
+
+  let pendingTasksCount = document.querySelector("#pendingTasksCounter");
+  pendingTasksCount.textContent = `You have ${countIncompleteTasks()} pending tasks`;
 }
 
-showTasks();
+showTasks(); // so it shows the tasks that I create
 
-function removeItem(taskItem) {
-  var itemToRemove = taskItem;
-  taskItem.parentNode.removeChild(taskItem);
-}
-//removeTaskBtn.onclick = remove(taskItem)
-
-/*if (removeTask.addEventListener("click")) {
-  task.todoList.removeChild(task);
-}*/
-
-//let removeTaskFromList =  todoList.removeChild(taskItem)
-
+//task creation
 let createBtn = document.querySelector("#createTask");
 
 function createTask() {
@@ -118,7 +178,18 @@ function createTask() {
 createBtn.addEventListener("click", () => {
   createTask();
 });
-
+//end of task creation
+//delete all completed tasks
+let clearDoneButton = document.querySelector("#clearDoneButton");
+clearDoneButton.addEventListener("click", () => {
+  deleteAllCompletedTasks();
+});
+function deleteAllCompletedTasks() {
+  todos = todos.filter((todo) => todo.todoComplete != true);
+  showTasks();
+}
+//end of delete all completed tasks
+//create new category
 let createCategoryBtn = document.querySelector("#createCategoryBtn");
 
 function createNewCategory() {
@@ -138,20 +209,24 @@ function createNewCategory() {
 createCategoryBtn.addEventListener("click", () => {
   createNewCategory();
 });
-
-/*function updateTable() {
-  todoList.innerHTML = "";}
-
-let pendingTasksCount = document.querySelector(".footer span");
-clearDoneButton.addEventListener("click", () => {
-  todos = todos.filter((todo) => !todo.todoComplete);
-  updateTable();
-});
-
-let removeTask = document.getElementById('#removeTaskBtn');
-removeTask.addEventListener("click", () => {
-    removeTask(todoList);
-
-  });
-
-updateTable()*/
+//end of create new category
+//delete individual tasks
+function removeTaskFromList(taskID) {
+  for (let task in todos) {
+    if (todos[task].todoID === taskID) {
+      todos = todos.filter((todo) => todo.todoID != taskID);
+      showTasks();
+    }
+  }
+}
+//end of delete individual tasks
+//making tasks as completed
+function markingTaskAsDone(taskID) {
+  for (let task in todos) {
+    if (todos[task].todoID === taskID) {
+      todos[task].todoComplete = true;
+      showTasks();
+    }
+  }
+}
+//end of marking tasks as completed
