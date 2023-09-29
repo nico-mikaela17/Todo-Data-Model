@@ -107,9 +107,10 @@ article button {
 article {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   margin: 1rem;
   padding: 1rem;
-  width: 10rem;
+  width: 15rem;
   display: block;
   border-style: double;
   border-width: 10px;

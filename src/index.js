@@ -52,6 +52,7 @@ function showCategories() {
     newCategoryName.textContent = categories[category].name;
 
     taskCategory.appendChild(newCategoryName);
+    //taskCategory.appendChild(deleteIcon);
   }
 }
 
@@ -81,7 +82,7 @@ function showTasks() {
       taskItem.style.color = todos[task].todoCategory.color;
     }
     taskItem.contentEditable = true;
-    
+
     let removeTaskBtn = document.createElement("button"); //delete button
     removeTaskBtn.innerHTML = '<i class="fa-solid fa-delete-left"></i>';
     if (todos[task].todoComplete === true) {
@@ -181,6 +182,7 @@ createBtn.addEventListener("click", () => {
   createTask();
 });
 //end of task creation
+
 //delete all completed tasks
 let clearDoneButton = document.querySelector("#clearDoneButton");
 clearDoneButton.addEventListener("click", () => {
@@ -191,16 +193,28 @@ function deleteAllCompletedTasks() {
   showTasks();
 }
 //end of delete all completed tasks
+
 //create new category
 let createCategoryBtn = document.querySelector("#createCategoryBtn");
 
 function createNewCategory() {
   let newCategoryItem = document.querySelector("#newCategoryItem");
   let colorCategory = document.querySelector("#colorCategory");
+  let deleteIcon = document.createElement('button');
+  deleteIcon.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+  deleteIcon.addEventListener("click", () => {
+    removeCategories();})
+
+    //delete categories
+function removeCategories() {
+  categories = categories.filter((category) => todo.todoCategory != clicked)
+}
+//end of delete categories
 
   let newCategory = {
     name: newCategoryItem.value,
     color: colorCategory.value,
+    deleteIcon: deleteIcon,
   };
 
   categories.push(newCategory);
@@ -212,6 +226,7 @@ createCategoryBtn.addEventListener("click", () => {
   createNewCategory();
 });
 //end of create new category
+
 //delete individual tasks
 function removeTaskFromList(taskID) {
   for (let task in todos) {
@@ -222,6 +237,7 @@ function removeTaskFromList(taskID) {
   }
 }
 //end of delete individual tasks
+
 //making tasks as completed
 function markingTaskAsDone(taskID) {
   for (let task in todos) {
@@ -232,3 +248,4 @@ function markingTaskAsDone(taskID) {
   }
 }
 //end of marking tasks as completed
+
