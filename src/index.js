@@ -3,7 +3,7 @@ let form = document.querySelector("#taskForm");
 let taskCategory = document.querySelector("#taskCategory");
 
 let categories = [
-  { name: "School", color: "#275d38" },
+  { name: "School", color: "#275d38"},
 
   { name: "Work", color: "#0065A4" },
 
@@ -11,6 +11,8 @@ let categories = [
 
   { name: "Dates", color: "#c9184a" },
 ];
+
+//delete:'<i class="fa-solid fa-trash-can"></i>'
 
 let todos = [
   {
@@ -44,7 +46,10 @@ let todos = [
 ];
 
 function showCategories() {
+  let newCategorySection = document.createElement("div")
+  let categoryDelete = document.createElement("i");
   taskCategory.innerHTML = '<option value="">Please Select</option>';
+  categoryDelete.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
 
   for (let category in categories) {
     let newCategoryName = document.createElement("option");
@@ -52,8 +57,10 @@ function showCategories() {
     newCategoryName.textContent = categories[category].name;
 
     taskCategory.appendChild(newCategoryName);
-    //taskCategory.appendChild(deleteIcon);
   }
+  // newCategorySection.appendChild(taskCategory);
+  // newCategorySection.appendChild(categoryDelete)
+
 }
 
 showCategories();
@@ -206,9 +213,18 @@ function createNewCategory() {
     removeCategories();})
 
     //delete categories
-function removeCategories() {
-  categories = categories.filter((category) => todo.todoCategory != clicked)
-}
+let deleteCategoryBtn = document.querySelector("#deleteCategoryBtn")
+deleteCategoryBtn.addEventListener('click', () => {
+  const deleteWhatCategory = prompt('Which category would you like to delete?')})
+
+  function deleteACategory(taskCategory){
+    for(let category in categories){
+      if (categories[category].todoCategory === taskCategory){
+        categories = categories.filter((category) => category.todoCategory != taskCategory)
+        showCategories()
+      }
+    }
+  }
 //end of delete categories
 
   let newCategory = {
