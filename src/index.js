@@ -1,7 +1,5 @@
 let form = document.querySelector("#taskForm");
 
-let taskCategory = document.querySelector("#taskCategory");
-
 let categories = [
   { name: "School", color: "#275d38"},
 
@@ -46,10 +44,8 @@ let todos = [
 ];
 
 function showCategories() {
-  let newCategorySection = document.createElement("div")
-  let categoryDelete = document.createElement("i");
+  let taskCategory = document.querySelector("#taskCategory");
   taskCategory.innerHTML = '<option value="">Please Select</option>';
-  categoryDelete.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
 
   for (let category in categories) {
     let newCategoryName = document.createElement("option");
@@ -58,12 +54,38 @@ function showCategories() {
 
     taskCategory.appendChild(newCategoryName);
   }
-  // newCategorySection.appendChild(taskCategory);
-  // newCategorySection.appendChild(categoryDelete)
+}
+showCategories();
+
+function deleteCategories() {
+  let taskCategory = document.querySelector("#deleteCategorySelection");
+  taskCategory.innerHTML = '<option value="">Please Select</option>';
+
+  for (let category in categories) {
+    let categoryName = document.createElement("option");
+    categoryName.value = categories[category].name;
+    categoryName.textContent = categories[category].name;
+
+    taskCategory.appendChild(categoryName);
+  }
 
 }
+deleteCategories()
 
-showCategories();
+function editCategories() {
+  let taskCategory = document.querySelector("#editCategorySelection");
+  taskCategory.innerHTML = '<option value="">Please Select</option>';
+
+  for (let category in categories) {
+    let categoryName = document.createElement("option");
+    categoryName.value = categories[category].name;
+    categoryName.textContent = categories[category].name;
+
+    taskCategory.appendChild(categoryName);
+  }
+
+}
+editCategories()
 
 function countIncompleteTasks() {
   let count = 0;
@@ -207,36 +229,32 @@ let createCategoryBtn = document.querySelector("#createCategoryBtn");
 function createNewCategory() {
   let newCategoryItem = document.querySelector("#newCategoryItem");
   let colorCategory = document.querySelector("#colorCategory");
-  let deleteIcon = document.createElement('button');
-  deleteIcon.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
-  deleteIcon.addEventListener("click", () => {
-    removeCategories();})
-
-    //delete categories
-let deleteCategoryBtn = document.querySelector("#deleteCategoryBtn")
-deleteCategoryBtn.addEventListener('click', () => {
-  const deleteWhatCategory = prompt('Which category would you like to delete?')})
-
-  function deleteACategory(taskCategory){
-    for(let category in categories){
-      if (categories[category].todoCategory === taskCategory){
-        categories = categories.filter((category) => category.todoCategory != taskCategory)
-        showCategories()
-      }
-    }
-  }
-//end of delete categories
 
   let newCategory = {
     name: newCategoryItem.value,
     color: colorCategory.value,
-    deleteIcon: deleteIcon,
   };
 
   categories.push(newCategory);
   console.log(categories);
   showCategories();
+  deleteCategories();
+  editCategories();
 }
+ //delete categories
+// let deleteCategoryBtn = document.querySelector("#deleteCategoryBtn")
+// deleteCategoryBtn.addEventListener('click', () => {
+//   const deleteWhatCategory = prompt('Which category would you like to delete?')})
+
+  // function deleteACategory(taskCategory){
+  //   for(let category in categories){
+  //     if (categories[category].todoCategory === taskCategory){
+  //       categories = categories.filter((category) => category.todoCategory != taskCategory)
+  //       showCategories()
+  //     }
+  //   }
+  // }
+//end of delete categories
 
 createCategoryBtn.addEventListener("click", () => {
   createNewCategory();

@@ -15,28 +15,29 @@ p {
   font-family: "Barlow Condensed", sans-serif;
 }
 
-.createCategoryText {
+.createCategoryText,
+.deleteCategoryText,
+.editCategoryText {
   margin-bottom: 0;
   margin-top: 4rem;
 }
 
-#taskForm {
-  display: flex;
-}
-
+#taskForm,
+#deleteAndEdit,
 #tName input,
+#editedCategoryNewName input,
 #dueDate,
-#taskCategory,
-#taskCategory::selection .createCategoryInput {
-  width: auto;
-  height: 26px;
+select,
+.createCategorySection,
+.deleteCategorySection,
+.editCategorySection {
   display: flex;
   align-self: center;
+  width: auto;
 }
 
-.createCategorySection {
-  width: auto;
-  display: flex;
+input{
+  height: 20px;
   align-self: center;
 }
 
@@ -49,10 +50,18 @@ p {
 .tName,
 .dueDate,
 .taskCategory,
-#createCategorySection
- {
+#editCategorySection {
   margin-left: 1rem;
 }
+
+#editedCategoryNewName{
+  margin-left: 1rem;
+}
+
+#createCategoryForm, #deleteCategorySection{
+  margin-left: 1rem;
+}
+
 
 #newCategoryItem {
   margin: 0;
@@ -63,7 +72,7 @@ p {
 }
 
 ::placeholder,
-#taskCategory,
+select,
 #dueDate {
   font-family: "Barlow Condensed", sans-serif;
   font-size: medium;
@@ -85,11 +94,11 @@ article button {
   text-align: left;
 }
 
-
 #createTask:hover,
 #createCategoryBtn:hover,
-#clearDoneButton:hover 
-#deleteCategoryBtn:hover{
+#clearDoneButton:hover,
+#deleteCategoryBtn:hover,
+#editCategoryBtn:hover {
   background: rgb(39, 93, 56);
   background: radial-gradient(
     circle,
@@ -100,6 +109,9 @@ article button {
   color: white;
 }
 
+#wholeEdit {
+  margin-left: 3rem;
+}
 #todoList {
   width: auto;
   display: flex;
@@ -118,8 +130,6 @@ article {
   border-style: double;
   border-width: 10px;
 }
-
-
 
 label {
   padding: 0 0 2rem 0;

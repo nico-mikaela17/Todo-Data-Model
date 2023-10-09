@@ -14,7 +14,10 @@
       href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&family=Bebas+Neue&display=swap"
       rel="stylesheet"
     />
-    <script src="https://kit.fontawesome.com/71978fcef7.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/71978fcef7.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <header>To-do List</header>
@@ -38,10 +41,11 @@
           <h3>Due Date</h3>
           <input type="date" id="dueDate" value="" />
         </div>
+
         <button id="createTask">Create Task</button>
       </div>
 
-      <div id="createCategorySection">
+      <div id="createCategoryForm">
         <h3 class="createCategoryText">Create your own category</h3>
         <div class="createCategorySection">
           <div class="createCategoryInput">
@@ -53,10 +57,25 @@
             <input type="color" id="colorCategory" value="#304c89" />
           </div>
           <button id="createCategoryBtn">Add Category</button>
+        </div>
+      </div>
+      <div id="deleteAndEdit">
+      <div id="deleteCategorySection">
+        <h3 class="deleteCategoryText">Delete a category</h3>
+        <div class="deleteCategorySection">
+          <select id="deleteCategorySelection"></select>
           <button id="deleteCategoryBtn">Delete A Category</button>
+        </div>
+      </div>
+      <div id="wholeEdit">
+        <h3 class="editCategoryText">Edit a category</h3>
+        <div class="editCategorySection">
+          <select id="editCategorySelection"></select>
+          <input id="editedCategoryNewName" type="text" placeholder="Edited Category" />
           <button id="editCategoryBtn">Edit A Category</button>
         </div>
       </div>
+    </div>
       <div id="todoList"></div>
     </main>
     <!--<ul class="todoList">
