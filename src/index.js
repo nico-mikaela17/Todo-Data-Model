@@ -44,7 +44,7 @@ let todos = [
 ];
 
 function showCategories() {
-  let taskCategory = document.querySelector("#taskCategory");
+  let taskCategory = document.querySelector(".taskCategory");
   taskCategory.innerHTML = '<option value="">Please Select</option>';
 
   for (let category in categories) {
@@ -185,7 +185,7 @@ let createBtn = document.querySelector("#createTask");
 
 function createTask() {
   let newText = document.querySelector("#tName");
-  let dueDate = document.querySelector("#dueDate");
+  let dueDate = document.querySelector(".dueDate");
   let newCategory = {};
 
   for (let category in categories) {

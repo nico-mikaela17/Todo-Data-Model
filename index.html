@@ -22,32 +22,24 @@
   <body>
     <header>To-do List</header>
     <main>
-      <div id="taskForm">
-        <div class="tName">
+      <div id="createTaskForm">
+        <div id="taskName">
           <h3>Choose a Task Name</h3>
           <input id="tName" type="text" placeholder="Task Name" />
         </div>
-        <div class="taskCategory">
+        <div id="taskCategory">
           <h3>Category</h3>
-          <select id="taskCategory">
-            <!-- <option value="">Please Select</option>
-          <option value="school">School</option>
-          <option value="work">Work</option>
-          <option value="chores">Chores</option>
-          <option value="dates">Dates</option> -->
-          </select>
+          <select class="taskCategory"></select>
         </div>
-        <div class="dueDate">
+        <div id="dueDate">
           <h3>Due Date</h3>
           <input type="date" id="dueDate" value="" />
         </div>
-
-        <button id="createTask">Create Task</button>
+        <button id="createTaskBtn">Create Task</button>
       </div>
-
-      <div id="createCategoryForm">
-        <h3 class="createCategoryText">Create your own category</h3>
+      <div id="categoryForm">
         <div class="createCategorySection">
+          <h3 class="createCategoryText">Create your own category</h3>
           <div class="createCategoryInput">
             <input
               id="newCategoryItem"
@@ -55,43 +47,42 @@
               placeholder="New Category"
             />
             <input type="color" id="colorCategory" value="#304c89" />
+            <button id="createCategoryBtn">Add Category</button>
           </div>
-          <button id="createCategoryBtn">Add Category</button>
+        </div>
+
+        <div id="deleteCategorySection">
+          <div class="deleteCategorySection">
+            <h3 class="deleteCategoryText">Delete a category</h3>
+            <div class="deleteCategoryInput">
+              <select id="deleteCategorySelection"></select>
+              <button id="deleteCategoryBtn">Delete A Category</button>
+            </div>
+          </div>
+        </div>
+        <div id="editCategorySection">
+          <div class="editCategorySection">
+            <h3 class="editCategoryText">Edit a category</h3>
+
+            <div class="editCategoryInput">
+              <select id="editCategorySelection"></select>
+              <input
+                id="editedCategoryInput"
+                type="text"
+                placeholder="Edited Category"
+              />
+              <button id="editCategoryBtn">Edit A Category</button>
+            </div>
+          </div>
         </div>
       </div>
-      <div id="deleteAndEdit">
-      <div id="deleteCategorySection">
-        <h3 class="deleteCategoryText">Delete a category</h3>
-        <div class="deleteCategorySection">
-          <select id="deleteCategorySelection"></select>
-          <button id="deleteCategoryBtn">Delete A Category</button>
-        </div>
+      <div class="footer">
+        <h3 id="pendingTasksCounter"></h3>
+        <button id="clearDoneButton">Clear Done</button>
       </div>
-      <div id="wholeEdit">
-        <h3 class="editCategoryText">Edit a category</h3>
-        <div class="editCategorySection">
-          <select id="editCategorySelection"></select>
-          <input id="editedCategoryNewName" type="text" placeholder="Edited Category" />
-          <button id="editCategoryBtn">Edit A Category</button>
-        </div>
-      </div>
-    </div>
       <div id="todoList"></div>
     </main>
-    <!--<ul class="todoList">
-        <li class="done">
-          Todo Item 1 (Done example)<span> <i class="fa fa-trash"></i></span>
-        </li>
-        <li>
-          Todo Item 2
-          <span class="editBtn"><i class="fa fa-edit"></i></span>
-          <span> <i class="fa fa-trash"></i></span>
-        </li>
-      </ul>-->
-    <div class="footer">
-      <p id="pendingTasksCounter"></p>
-      <button id="clearDoneButton">Clear Done</button>
-    </div>
+
     <footer>Created by Nicole Linnarz</footer>
 
     <script src="src/index.js" type="module"></script>

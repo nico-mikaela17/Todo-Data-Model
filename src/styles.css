@@ -11,64 +11,10 @@ header {
 
 h3,
 h4,
-p {
+p{
   font-family: "Barlow Condensed", sans-serif;
-}
-
-.createCategoryText,
-.deleteCategoryText,
-.editCategoryText {
-  margin-bottom: 0;
+  margin-bottom: 0.5rem;
   margin-top: 4rem;
-}
-
-#taskForm,
-#deleteAndEdit,
-#tName input,
-#editedCategoryNewName input,
-#dueDate,
-select,
-.createCategorySection,
-.deleteCategorySection,
-.editCategorySection {
-  display: flex;
-  align-self: center;
-  width: auto;
-}
-
-input{
-  height: 20px;
-  align-self: center;
-}
-
-.tName,
-.taskCategory,
-.createCategoryInput {
-  align-self: flex-end;
-}
-
-.tName,
-.dueDate,
-.taskCategory,
-#editCategorySection {
-  margin-left: 1rem;
-}
-
-#editedCategoryNewName{
-  margin-left: 1rem;
-}
-
-#createCategoryForm, #deleteCategorySection{
-  margin-left: 1rem;
-}
-
-
-#newCategoryItem {
-  margin: 0;
-}
-
-#colorCategory {
-  margin-left: 1.5rem;
 }
 
 ::placeholder,
@@ -77,6 +23,44 @@ select,
   font-family: "Barlow Condensed", sans-serif;
   font-size: medium;
   padding: 2px;
+}
+
+#createTaskForm,
+#categoryForm{
+  display: flex;
+  align-items: end;
+  justify-content:left ;}
+
+  #taskCategory h3{
+    height: 30px;
+  }
+
+  #editCategorySection, #editedCategoryInput{
+    margin-left: 1.5rem;
+  }
+
+input,
+select {
+  height: 30px;
+}
+
+.createCategoryInput, .deleteCategoryInput, .editCategoryInput {
+  margin: 0;
+  display: flex;
+  align-items: end;
+
+}
+
+#deleteCategorySection, #editCategorySection {
+  margin-left: 1rem;}
+
+  .deleteCategorySection, .editCategorySection{
+  border-width: 3px;
+  border-right: 0;
+  border-top: 0;
+  border-bottom: 0;
+  border-color: black;
+  border-style: solid;
 }
 
 button {
@@ -90,11 +74,7 @@ button {
   padding: 0.5rem;
 }
 
-article button {
-  text-align: left;
-}
-
-#createTask:hover,
+#createTaskBtn:hover,
 #createCategoryBtn:hover,
 #clearDoneButton:hover,
 #deleteCategoryBtn:hover,
@@ -109,9 +89,6 @@ article button {
   color: white;
 }
 
-#wholeEdit {
-  margin-left: 3rem;
-}
 #todoList {
   width: auto;
   display: flex;
@@ -119,7 +96,7 @@ article button {
   flex-wrap: wrap;
 }
 
-article {
+#todoList article {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -138,6 +115,12 @@ label {
   padding: 2rem;
 }
 
+.footer{
+  display: flex;
+}
+
 footer {
+  font-family: "Barlow Condensed", sans-serif;
   bottom: 10px;
+text-align: center;
 }
