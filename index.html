@@ -17,6 +17,7 @@
     <script
       src="https://kit.fontawesome.com/71978fcef7.js"
       crossorigin="anonymous"
+      
     ></script>
   </head>
   <body>
@@ -27,11 +28,11 @@
           <h3>Choose a Task Name</h3>
           <input id="tName" type="text" placeholder="Task Name" />
         </div>
-        <div id="taskCategory">
+        <div class="taskCategory">
           <h3>Category</h3>
-          <select class="taskCategory"></select>
+          <select id="taskCategory"></select>
         </div>
-        <div id="dueDate">
+        <div id="dueDateSection">
           <h3>Due Date</h3>
           <input type="date" id="dueDate" value="" />
         </div>
@@ -55,8 +56,9 @@
           <div class="deleteCategorySection">
             <h3 class="deleteCategoryText">Delete a category</h3>
             <div class="deleteCategoryInput">
-              <select id="deleteCategorySelection"></select>
+              <select class="deleteCategorySelection"></select>
               <button id="deleteCategoryBtn">Delete A Category</button>
+              <!--onclick = "deleteCategory()"--> 
             </div>
           </div>
         </div>
@@ -65,7 +67,7 @@
             <h3 class="editCategoryText">Edit a category</h3>
 
             <div class="editCategoryInput">
-              <select id="editCategorySelection"></select>
+              <select class="editCategorySelection"></select>
               <input
                 id="editedCategoryInput"
                 type="text"
@@ -86,5 +88,6 @@
     <footer>Created by Nicole Linnarz</footer>
 
     <script src="src/index.js" type="module"></script>
+    <script type = "text/javascript" src = "src/index.js"></script>
   </body>
 </html>

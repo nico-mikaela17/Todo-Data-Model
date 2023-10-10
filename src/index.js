@@ -1,7 +1,7 @@
-let form = document.querySelector("#taskForm");
+let form = document.querySelector("#createTaskForm");
 
 let categories = [
-  { name: "School", color: "#275d38"},
+  { name: "School", color: "#275d38" },
 
   { name: "Work", color: "#0065A4" },
 
@@ -9,8 +9,6 @@ let categories = [
 
   { name: "Dates", color: "#c9184a" },
 ];
-
-//delete:'<i class="fa-solid fa-trash-can"></i>'
 
 let todos = [
   {
@@ -44,7 +42,7 @@ let todos = [
 ];
 
 function showCategories() {
-  let taskCategory = document.querySelector(".taskCategory");
+  let taskCategory = document.querySelector("#taskCategory");
   taskCategory.innerHTML = '<option value="">Please Select</option>';
 
   for (let category in categories) {
@@ -58,7 +56,7 @@ function showCategories() {
 showCategories();
 
 function deleteCategories() {
-  let taskCategory = document.querySelector("#deleteCategorySelection");
+  let taskCategory = document.querySelector(".deleteCategorySelection");
   taskCategory.innerHTML = '<option value="">Please Select</option>';
 
   for (let category in categories) {
@@ -68,12 +66,11 @@ function deleteCategories() {
 
     taskCategory.appendChild(categoryName);
   }
-
 }
-deleteCategories()
+deleteCategories();
 
 function editCategories() {
-  let taskCategory = document.querySelector("#editCategorySelection");
+  let taskCategory = document.querySelector(".editCategorySelection");
   taskCategory.innerHTML = '<option value="">Please Select</option>';
 
   for (let category in categories) {
@@ -83,9 +80,8 @@ function editCategories() {
 
     taskCategory.appendChild(categoryName);
   }
-
 }
-editCategories()
+editCategories();
 
 function countIncompleteTasks() {
   let count = 0;
@@ -181,11 +177,11 @@ function showTasks() {
 showTasks(); // so it shows the tasks that I create
 
 //task creation
-let createBtn = document.querySelector("#createTask");
+let createBtn = document.querySelector("#createTaskBtn");
 
 function createTask() {
   let newText = document.querySelector("#tName");
-  let dueDate = document.querySelector(".dueDate");
+  let dueDate = document.querySelector("#dueDate");
   let newCategory = {};
 
   for (let category in categories) {
@@ -241,26 +237,58 @@ function createNewCategory() {
   deleteCategories();
   editCategories();
 }
- //delete categories
-// let deleteCategoryBtn = document.querySelector("#deleteCategoryBtn")
-// deleteCategoryBtn.addEventListener('click', () => {
-//   const deleteWhatCategory = prompt('Which category would you like to delete?')})
-
-  // function deleteACategory(taskCategory){
-  //   for(let category in categories){
-  //     if (categories[category].todoCategory === taskCategory){
-  //       categories = categories.filter((category) => category.todoCategory != taskCategory)
-  //       showCategories()
-  //     }
-  //   }
-  // }
-//end of delete categories
 
 createCategoryBtn.addEventListener("click", () => {
   createNewCategory();
 });
 //end of create new category
 
+//delete category
+// function deleteCategory(deletedCategory) {
+//   // let deleteCategoryDropDown = document.querySelector(".deleteCategorySelection");
+//   let deleteCategoryBtn = document.querySelector("#deleteCategoryBtn");
+
+//   deleteCategoryBtn.addEventListener("click", () => {
+//     deleteCategory();
+//   });
+//   console.log("category deleted");
+
+//   for (let category in categories) {
+//     if (categories[category].todoCategory === value)
+//     categories.remove(category);
+//   //   if (categories[category].todoCategory === deletedCategory) {
+//   //     categories = categories.filter(
+//   //       (category) => categories.todoCategory != deleteCategory
+//   //     );
+//   //   }
+//   //   deleteCategoryDropDown.remove(deleteCategoryDropDown.selectedIndex)
+//    }
+//   showCategories();
+//   deleteCategories();
+//   editCategories();
+// }
+
+//end of delete category
+//edit categories
+let editCategoryBtn = document.querySelector("#editCategoryBtn");
+editCategoryBtn.addEventListener("click", () => {
+  editACategory();
+});
+function editACategory() {
+  let editedCategoryItem = document.querySelector("#editedCategoryInput");
+
+  let editedCategory = {
+    name: editedCategoryItem.value,
+    color: colorCategory.value,
+  };
+  categories.push(editedCategory);
+
+  console.log(categories);
+  showCategories();
+  deleteCategories();
+  editCategories();
+}
+//end of edit categories
 //delete individual tasks
 function removeTaskFromList(taskID) {
   for (let task in todos) {
@@ -282,4 +310,3 @@ function markingTaskAsDone(taskID) {
   }
 }
 //end of marking tasks as completed
-
