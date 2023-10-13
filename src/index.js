@@ -55,22 +55,146 @@ function showCategories() {
 }
 showCategories();
 
+//task creation
+let createBtn = document.querySelector("#createTaskBtn");
+
+function createTask() {
+  let newText = document.querySelector("#tName");
+  let dueDate = document.querySelector("#dueDate");
+  let newCategory = {};
+
+  for (let category in categories) {
+    if (taskCategory.value === categories[category].name) {
+      newCategory = categories[category];
+    } else {
+      newCategory = {
+        name: 'None',
+        color: '#000'
+      }
+    }
+  }
+
+  let newTodo = {
+    todoID: todos.length,
+    todoName: newText.value,
+    todoCategory: newCategory,
+    todoComplete: false,
+    todoDueDate: dueDate.value,
+  };
+
+  todos.push(newTodo);
+  showTasks();
+}
+
+createBtn.addEventListener("click", () => {
+  createTask();
+});
+//end of task creation
+
+// display tasks in the todolist
+function showTasks() {
+  let todoList = document.querySelector("#todoList");
+  todoList.innerHTML = "";
+
+  for (let task in todos) {
+    //creation of the article/task
+    //loop
+    let taskItem = document.createElement("article"); //create item
+    if (todos[task].todoComplete === true) {
+      taskItem.style.color = "#ced4da";
+    } else {
+      taskItem.style.color = todos[task].todoCategory.color;
+    }
+    taskItem.contentEditable = true;
+
+    let removeTaskBtn = document.createElement("button"); //delete button
+    removeTaskBtn.innerHTML = '<i class="fa-solid fa-delete-left"></i>';
+    if (todos[task].todoComplete === true) {
+      removeTaskBtn.style.color = "#ced4da";
+    } else {
+      removeTaskBtn.style.color = todos[task].todoCategory.color;
+    }
+    removeTaskBtn.style.border = "none";
+    removeTaskBtn.style.float = "right";
+    removeTaskBtn.style.cursor = "pointer";
+    removeTaskBtn.onclick = function () {
+      removeTaskFromList(todos[task].todoID);
+    };
+    taskItem.appendChild(removeTaskBtn);
+
+    let taskName = document.createElement("h3");
+    taskName.textContent = todos[task].todoName; //task title
+
+    if (todos[task].todoComplete === true) {
+      taskName.style.color = "#ced4da";
+    } else {
+      taskName.style.color = todos[task].todoCategory.color;
+    }
+
+    taskItem.appendChild(taskName);
+
+    let taskCategory = document.createElement("h4"); //task category
+    taskCategory.textContent = todos[task].todoCategory.name;
+    // if (categories[category].todoCategory ==="") {
+    //   category.name = "None"
+    // }
+    if (todos[task].todoComplete === true) {
+      taskCategory.style.color = "#ced4da";
+    } else {
+      taskCategory.style.color = todos[task].todoCategory.color;
+    }
+    taskItem.appendChild(taskCategory);
+
+    let taskDate = document.createElement("p"); //due date
+    taskDate.textContent = todos[task].todoDueDate;
+    if (todos[task].todoComplete === true) {
+      taskDate.style.color = "#ced4da";
+    } else {
+      taskDate.style.color = todos[task].todoCategory.color;
+    }
+    taskItem.appendChild(taskDate);
+
+    let markAsDoneBtn = document.createElement("button"); //delete button
+    markAsDoneBtn.innerHTML = '<i class="fa-solid fa-square-check"></i>';
+    if (todos[task].todoComplete === true) {
+      markAsDoneBtn.style.color = "#ced4da";
+    } else {
+      markAsDoneBtn.style.color = todos[task].todoCategory.color;
+    }
+    markAsDoneBtn.style.border = "none";
+    markAsDoneBtn.style.float = "right";
+    markAsDoneBtn.style.cursor = "pointer";
+    markAsDoneBtn.onclick = function () {
+      markingTaskAsDone(todos[task].todoID);
+    };
+    taskItem.appendChild(markAsDoneBtn);
+
+    todoList.appendChild(taskItem);
+  }
+
+  let pendingTasksCount = document.querySelector("#pendingTasksCounter");
+  pendingTasksCount.textContent = `You have ${countIncompleteTasks()} pending tasks`;
+}
+
+showTasks(); // so it shows the tasks that I create
+//end of display tasks in the todolist
+
 function deleteCategories() {
-  let taskCategory = document.querySelector(".deleteCategorySelection");
+  let taskCategory = document.querySelector("#deleteCategorySelection");
   taskCategory.innerHTML = '<option value="">Please Select</option>';
 
   for (let category in categories) {
-    let categoryName = document.createElement("option");
-    categoryName.value = categories[category].name;
-    categoryName.textContent = categories[category].name;
+    let deleteCategoryName = document.createElement("option");
+    deleteCategoryName.value = categories[category].name;
+    deleteCategoryName.textContent = categories[category].name;
 
-    taskCategory.appendChild(categoryName);
+    taskCategory.appendChild(deleteCategoryName);
   }
 }
 deleteCategories();
 
 function editCategories() {
-  let taskCategory = document.querySelector(".editCategorySelection");
+  let taskCategory = document.querySelector("#editCategorySelection");
   taskCategory.innerHTML = '<option value="">Please Select</option>';
 
   for (let category in categories) {
@@ -92,121 +216,6 @@ function countIncompleteTasks() {
   }
   return count;
 }
-
-function showTasks() {
-  let todoList = document.querySelector("#todoList");
-  todoList.innerHTML = "";
-
-  for (let task in todos) {
-    //creation of the article/task
-    //loop
-    let taskItem = document.createElement("article"); //create item
-    if (todos[task].todoComplete === true) {
-      taskItem.style.color = "#000";
-    } else {
-      taskItem.style.color = todos[task].todoCategory.color;
-    }
-    taskItem.contentEditable = true;
-
-    let removeTaskBtn = document.createElement("button"); //delete button
-    removeTaskBtn.innerHTML = '<i class="fa-solid fa-delete-left"></i>';
-    if (todos[task].todoComplete === true) {
-      removeTaskBtn.style.color = "#000";
-    } else {
-      removeTaskBtn.style.color = todos[task].todoCategory.color;
-    }
-    removeTaskBtn.style.border = "none";
-    removeTaskBtn.style.float = "right";
-    removeTaskBtn.style.cursor = "pointer";
-    removeTaskBtn.onclick = function () {
-      removeTaskFromList(todos[task].todoID);
-    };
-    taskItem.appendChild(removeTaskBtn);
-
-    let taskName = document.createElement("h3");
-    taskName.textContent = todos[task].todoName; //task title
-
-    if (todos[task].todoComplete === true) {
-      taskName.style.color = "#000";
-    } else {
-      taskName.style.color = todos[task].todoCategory.color;
-    }
-
-    taskItem.appendChild(taskName);
-
-    let taskCategory = document.createElement("h4"); //task category
-    taskCategory.textContent = todos[task].todoCategory.name;
-    if (todos[task].todoComplete === true) {
-      taskCategory.style.color = "#000";
-    } else {
-      taskCategory.style.color = todos[task].todoCategory.color;
-    }
-    taskItem.appendChild(taskCategory);
-
-    let taskDate = document.createElement("p"); //due date
-    taskDate.textContent = todos[task].todoDueDate;
-    if (todos[task].todoComplete === true) {
-      taskDate.style.color = "#000";
-    } else {
-      taskDate.style.color = todos[task].todoCategory.color;
-    }
-    taskItem.appendChild(taskDate);
-
-    let markAsDoneBtn = document.createElement("button"); //delete button
-    markAsDoneBtn.innerHTML = '<i class="fa-solid fa-square-check"></i>';
-    if (todos[task].todoComplete === true) {
-      markAsDoneBtn.style.color = "#000";
-    } else {
-      markAsDoneBtn.style.color = todos[task].todoCategory.color;
-    }
-    markAsDoneBtn.style.border = "none";
-    markAsDoneBtn.style.float = "right";
-    markAsDoneBtn.style.cursor = "pointer";
-    markAsDoneBtn.onclick = function () {
-      markingTaskAsDone(todos[task].todoID);
-    };
-    taskItem.appendChild(markAsDoneBtn);
-
-    todoList.appendChild(taskItem);
-  }
-
-  let pendingTasksCount = document.querySelector("#pendingTasksCounter");
-  pendingTasksCount.textContent = `You have ${countIncompleteTasks()} pending tasks`;
-}
-
-showTasks(); // so it shows the tasks that I create
-
-//task creation
-let createBtn = document.querySelector("#createTaskBtn");
-
-function createTask() {
-  let newText = document.querySelector("#tName");
-  let dueDate = document.querySelector("#dueDate");
-  let newCategory = {};
-
-  for (let category in categories) {
-    if (taskCategory.value === categories[category].name) {
-      newCategory = categories[category];
-    }
-  }
-
-  let newTodo = {
-    todoID: todos.length,
-    todoName: newText.value,
-    todoCategory: newCategory,
-    todoComplete: false,
-    todoDueDate: dueDate.value,
-  };
-
-  todos.push(newTodo);
-  console.log(todos);
-  showTasks();
-}
-
-createBtn.addEventListener("click", () => {
-  createTask();
-});
-//end of task creation
 
 //delete all completed tasks
 let clearDoneButton = document.querySelector("#clearDoneButton");
@@ -232,7 +241,6 @@ function createNewCategory() {
   };
 
   categories.push(newCategory);
-  console.log(categories);
   showCategories();
   deleteCategories();
   editCategories();
@@ -244,29 +252,27 @@ createCategoryBtn.addEventListener("click", () => {
 //end of create new category
 
 //delete category
-// function deleteCategory(deletedCategory) {
-//   // let deleteCategoryDropDown = document.querySelector(".deleteCategorySelection");
-//   let deleteCategoryBtn = document.querySelector("#deleteCategoryBtn");
+let deleteCategoryBtn = document.querySelector("#deleteCategoryBtn");
+let deleteCategorySelection = document.querySelector(
+  "#deleteCategorySelection"
+);
 
-//   deleteCategoryBtn.addEventListener("click", () => {
-//     deleteCategory();
-//   });
-//   console.log("category deleted");
+function deleteCategory(categoryName) {
+  categories.forEach((category) => {
+    if (category.name === categoryName) {
+      categories = categories.filter(
+        (category) => category.name != categoryName
+      );
+      deleteCategories();
+      showCategories();
+      editCategories();
+    }
+  });
+}
 
-//   for (let category in categories) {
-//     if (categories[category].todoCategory === value)
-//     categories.remove(category);
-//   //   if (categories[category].todoCategory === deletedCategory) {
-//   //     categories = categories.filter(
-//   //       (category) => categories.todoCategory != deleteCategory
-//   //     );
-//   //   }
-//   //   deleteCategoryDropDown.remove(deleteCategoryDropDown.selectedIndex)
-//    }
-//   showCategories();
-//   deleteCategories();
-//   editCategories();
-// }
+deleteCategoryBtn.addEventListener("click", () => {
+  deleteCategory(deleteCategorySelection.value);
+});
 
 //end of delete category
 //edit categories
@@ -274,21 +280,28 @@ let editCategoryBtn = document.querySelector("#editCategoryBtn");
 editCategoryBtn.addEventListener("click", () => {
   editACategory();
 });
+
 function editACategory() {
   let editedCategoryItem = document.querySelector("#editedCategoryInput");
 
   let editedCategory = {
     name: editedCategoryItem.value,
+    value:editedCategoryItem.value,
     color: colorCategory.value,
   };
-  categories.push(editedCategory);
+  
+  categories.forEach(category => {
+    if (category.name === editedCategoryItem.value){
+      category.name = editedCategory.value
+    }
+  })
 
-  console.log(categories);
   showCategories();
   deleteCategories();
   editCategories();
 }
 //end of edit categories
+
 //delete individual tasks
 function removeTaskFromList(taskID) {
   for (let task in todos) {

@@ -11,7 +11,7 @@ header {
 
 h3,
 h4,
-p{
+p {
   font-family: "Barlow Condensed", sans-serif;
   margin-bottom: 0.5rem;
   margin-top: 4rem;
@@ -26,35 +26,42 @@ select,
 }
 
 #createTaskForm,
-#categoryForm{
+#categoryForm {
   display: flex;
   align-items: end;
-  justify-content:left ;}
+  justify-content: left;
+}
 
-  #taskCategory h3{
-    height: 30px;
-  }
+#taskCategory h3 {
+  height: 30px;
+}
 
-  #editCategorySection, #editedCategoryInput{
-    margin-left: 1.5rem;
-  }
+#editCategorySection,
+#editedCategoryInput {
+  margin-left: 1.5rem;
+}
 
 input,
 select {
   height: 30px;
+  border-radius: 3px;
 }
 
-.createCategoryInput, .deleteCategoryInput, .editCategoryInput {
+.createCategoryInput,
+.deleteCategoryInput,
+.editCategoryInput {
   margin: 0;
   display: flex;
   align-items: end;
-
 }
 
-#deleteCategorySection, #editCategorySection {
-  margin-left: 1rem;}
+#deleteCategorySection,
+#editCategorySection {
+  margin-left: 1rem;
+}
 
-  .deleteCategorySection, .editCategorySection{
+.deleteCategorySection,
+.editCategorySection {
   border-width: 3px;
   border-right: 0;
   border-top: 0;
@@ -115,12 +122,12 @@ label {
   padding: 2rem;
 }
 
-.footer{
+.footer {
   display: flex;
 }
 
 footer {
   font-family: "Barlow Condensed", sans-serif;
   bottom: 10px;
-text-align: center;
+  text-align: center;
 }
