@@ -68,9 +68,9 @@ function createTask() {
       newCategory = categories[category];
     } else {
       newCategory = {
-        name: 'None',
-        color: '#000'
-      }
+        name: "None",
+        color: "#000",
+      };
     }
   }
 
@@ -273,8 +273,8 @@ function deleteCategory(categoryName) {
 deleteCategoryBtn.addEventListener("click", () => {
   deleteCategory(deleteCategorySelection.value);
 });
-
 //end of delete category
+
 //edit categories
 let editCategoryBtn = document.querySelector("#editCategoryBtn");
 editCategoryBtn.addEventListener("click", () => {
@@ -283,22 +283,20 @@ editCategoryBtn.addEventListener("click", () => {
 
 function editACategory() {
   let editedCategoryItem = document.querySelector("#editedCategoryInput");
+  let editedCategorySelection = document.querySelector(
+    "#editCategorySelection"
+  );
 
-  let editedCategory = {
-    name: editedCategoryItem.value,
-    value:editedCategoryItem.value,
-    color: colorCategory.value,
-  };
-  
-  categories.forEach(category => {
-    if (category.name === editedCategoryItem.value){
-      category.name = editedCategory.value
+  categories.forEach((category) => {
+    if (category.name === editedCategorySelection.value) {
+      category.name = editedCategoryItem.value;
+      editedCategoryItem.value = ''
+      showCategories();
+      deleteCategories();
+      editCategories();
+      return
     }
-  })
-
-  showCategories();
-  deleteCategories();
-  editCategories();
+  });
 }
 //end of edit categories
 
