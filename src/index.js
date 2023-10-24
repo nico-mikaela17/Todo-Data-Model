@@ -1,5 +1,6 @@
 let form = document.querySelector("#createTaskForm");
 
+// preset categories
 let categories = [
   { name: "School", color: "#275d38" },
 
@@ -10,6 +11,7 @@ let categories = [
   { name: "Dates", color: "#c9184a" },
 ];
 
+// preset todos so I can see different colors and layout
 let todos = [
   {
     todoID: 0,
@@ -41,21 +43,32 @@ let todos = [
   },
 ];
 
-function showCategories() {
-  let taskCategory = document.querySelector("#taskCategory");
-  taskCategory.innerHTML = '<option value="">Please Select</option>';
+//create new category
+let createCategoryBtn = document.querySelector("#createCategoryBtn");
 
-  for (let category in categories) {
-    let newCategoryName = document.createElement("option");
-    newCategoryName.value = categories[category].name;
-    newCategoryName.textContent = categories[category].name;
+function createNewCategory() {
+  let newCategoryItem = document.querySelector("#newCategoryItem");
+  let colorCategory = document.querySelector("#colorCategory");
 
-    taskCategory.appendChild(newCategoryName);
-  }
+  let newCategory = {
+    name: newCategoryItem.value,
+    color: colorCategory.value,
+  };
+
+  categories.push(newCategory);
+  showCategories();
+  deleteCategories();
+  editCategories();
 }
-showCategories();
 
-//task creation
+createCategoryBtn.addEventListener("click", () => {
+  createNewCategory();
+});
+//end of create new category
+
+//end of creation of drop-downs
+
+//we create a task in the first form area
 let createBtn = document.querySelector("#createTaskBtn");
 
 function createTask() {
@@ -63,16 +76,26 @@ function createTask() {
   let dueDate = document.querySelector("#dueDate");
   let newCategory = {};
 
-  for (let category in categories) {
-    if (taskCategory.value === categories[category].name) {
-      newCategory = categories[category];
-    } else {
-      newCategory = {
-        name: "None",
-        color: "#000",
-      };
-    }
-  }
+//   for (let category in categories) {
+//     if (taskCategory.value === categories[category].name) {
+//       newCategory = categories[category];
+//     }
+  
+// else {
+//   // No category selected, set a default category
+//   newCategory = {
+//     name: "No Category",
+//     color: "#000",
+//   };
+// }}
+
+if(newCategory = {
+  name: "No Category",
+  color: "#000",
+}); else{
+  taskCategory.value === categories[category].name
+    newCategory = categories[category]
+}
 
   let newTodo = {
     todoID: todos.length,
@@ -90,15 +113,41 @@ createBtn.addEventListener("click", () => {
   createTask();
 });
 //end of task creation
+//create category
+// generate the categories dropdowns in the first area based on the preset categories and the ones that we create/delete/edit later on
+function showCategories() {
+  let taskCategory = document.querySelector("#taskCategory");
+  taskCategory.innerHTML = '<option value="">Please Select</option>';
 
-// display tasks in the todolist
+  for (let category in categories) {
+    let newCategoryName = document.createElement("option");
+    newCategoryName.value = categories[category].name;
+    newCategoryName.textContent = categories[category].name;
+
+    taskCategory.appendChild(newCategoryName);
+  }
+}
+showCategories();
+
+// How many tasks do I have left?
+function countIncompleteTasks() {
+  let count = 0;
+  for (let task in todos) {
+    if (todos[task].todoComplete === false) {
+      count++;
+    }
+  }
+  return count;
+}
+
+// add and display tasks in the todolist
 function showTasks() {
   let todoList = document.querySelector("#todoList");
   todoList.innerHTML = "";
 
   for (let task in todos) {
     //creation of the article/task
-    //loop
+    //loop so it happens to every element?
     let taskItem = document.createElement("article"); //create item
     if (todos[task].todoComplete === true) {
       taskItem.style.color = "#ced4da";
@@ -179,6 +228,40 @@ function showTasks() {
 showTasks(); // so it shows the tasks that I create
 //end of display tasks in the todolist
 
+//delete all completed tasks
+let clearDoneButton = document.querySelector("#clearDoneButton");
+clearDoneButton.addEventListener("click", () => {
+  deleteAllCompletedTasks();
+});
+function deleteAllCompletedTasks() {
+  todos = todos.filter((todo) => todo.todoComplete != true);
+  showTasks();
+}
+//end of delete all completed tasks
+
+//delete individual tasks
+function removeTaskFromList(taskID) {
+  for (let task in todos) {
+    if (todos[task].todoID === taskID) {
+      todos = todos.filter((todo) => todo.todoID != taskID);
+      showTasks();
+    }
+  }
+}
+//end of delete individual tasks
+
+//making tasks as completed
+function markingTaskAsDone(taskID) {
+  for (let task in todos) {
+    if (todos[task].todoID === taskID) {
+      todos[task].todoComplete = true;
+      showTasks();
+    }
+  }
+}
+//end of marking tasks as completed
+
+//delete category
 function deleteCategories() {
   let taskCategory = document.querySelector("#deleteCategorySelection");
   taskCategory.innerHTML = '<option value="">Please Select</option>';
@@ -193,65 +276,6 @@ function deleteCategories() {
 }
 deleteCategories();
 
-function editCategories() {
-  let taskCategory = document.querySelector("#editCategorySelection");
-  taskCategory.innerHTML = '<option value="">Please Select</option>';
-
-  for (let category in categories) {
-    let categoryName = document.createElement("option");
-    categoryName.value = categories[category].name;
-    categoryName.textContent = categories[category].name;
-
-    taskCategory.appendChild(categoryName);
-  }
-}
-editCategories();
-
-function countIncompleteTasks() {
-  let count = 0;
-  for (let task in todos) {
-    if (todos[task].todoComplete === false) {
-      count++;
-    }
-  }
-  return count;
-}
-
-//delete all completed tasks
-let clearDoneButton = document.querySelector("#clearDoneButton");
-clearDoneButton.addEventListener("click", () => {
-  deleteAllCompletedTasks();
-});
-function deleteAllCompletedTasks() {
-  todos = todos.filter((todo) => todo.todoComplete != true);
-  showTasks();
-}
-//end of delete all completed tasks
-
-//create new category
-let createCategoryBtn = document.querySelector("#createCategoryBtn");
-
-function createNewCategory() {
-  let newCategoryItem = document.querySelector("#newCategoryItem");
-  let colorCategory = document.querySelector("#colorCategory");
-
-  let newCategory = {
-    name: newCategoryItem.value,
-    color: colorCategory.value,
-  };
-
-  categories.push(newCategory);
-  showCategories();
-  deleteCategories();
-  editCategories();
-}
-
-createCategoryBtn.addEventListener("click", () => {
-  createNewCategory();
-});
-//end of create new category
-
-//delete category
 let deleteCategoryBtn = document.querySelector("#deleteCategoryBtn");
 let deleteCategorySelection = document.querySelector(
   "#deleteCategorySelection"
@@ -276,6 +300,20 @@ deleteCategoryBtn.addEventListener("click", () => {
 //end of delete category
 
 //edit categories
+function editCategories() {
+  let taskCategory = document.querySelector("#editCategorySelection");
+  taskCategory.innerHTML = '<option value="">Please Select</option>';
+
+  for (let category in categories) {
+    let categoryName = document.createElement("option");
+    categoryName.value = categories[category].name;
+    categoryName.textContent = categories[category].name;
+
+    taskCategory.appendChild(categoryName);
+  }
+}
+editCategories();
+
 let editCategoryBtn = document.querySelector("#editCategoryBtn");
 editCategoryBtn.addEventListener("click", () => {
   editACategory();
@@ -290,34 +328,12 @@ function editACategory() {
   categories.forEach((category) => {
     if (category.name === editedCategorySelection.value) {
       category.name = editedCategoryItem.value;
-      editedCategoryItem.value = ''
+      editedCategoryItem.value = "";
       showCategories();
       deleteCategories();
       editCategories();
-      return
+      return;
     }
   });
 }
 //end of edit categories
-
-//delete individual tasks
-function removeTaskFromList(taskID) {
-  for (let task in todos) {
-    if (todos[task].todoID === taskID) {
-      todos = todos.filter((todo) => todo.todoID != taskID);
-      showTasks();
-    }
-  }
-}
-//end of delete individual tasks
-
-//making tasks as completed
-function markingTaskAsDone(taskID) {
-  for (let task in todos) {
-    if (todos[task].todoID === taskID) {
-      todos[task].todoComplete = true;
-      showTasks();
-    }
-  }
-}
-//end of marking tasks as completed
