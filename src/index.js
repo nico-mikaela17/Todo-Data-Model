@@ -1,4 +1,4 @@
-//TODO:Data model should store all information about todos including (but not limited to):Todo name, Status, ID, Category, Due Date
+//DONE:Data model should store all information about todos including (but not limited to):Todo name, Status, ID, Category, Due Date
 
 // preset categories
 let categories = [
@@ -46,6 +46,7 @@ let todos = [
 let form = document.querySelector("#createTaskForm");
 
 //TODO: Add New Category
+//FIXME: allow new tasks to show any category + have a color
 //create new category
 let createCategoryBtn = document.querySelector("#createCategoryBtn");
 
@@ -205,7 +206,7 @@ function showTasks() {
       taskDate.style.color = todos[task].todoCategory.color;
     }
     taskItem.appendChild(taskDate);
-    //TODO: Edit Due Date
+    //DONE: Edit Due Date
     taskDate.contentEditable = "plaintext-only";
 
     let markAsDoneBtn = document.createElement("button"); //delete button
@@ -234,6 +235,17 @@ function showTasks() {
 showTasks(); // so it shows the tasks that I create
 //end of display tasks in the todolist
 
+//DONE: Delete Todo
+//delete individual tasks
+function removeTaskFromList(taskID) {
+  for (let task in todos) {
+    if (todos[task].todoID === taskID) {
+      todos = todos.filter((todo) => todo.todoID != taskID);
+      showTasks();
+    }
+  }
+}
+//end of delete individual tasks
 //delete all completed tasks
 let clearDoneButton = document.querySelector("#clearDoneButton");
 clearDoneButton.addEventListener("click", () => {
@@ -245,21 +257,9 @@ function deleteAllCompletedTasks() {
 }
 //end of delete all completed tasks
 
-//TODO: Delete Todo
-//delete individual tasks
-function removeTaskFromList(taskID) {
-  for (let task in todos) {
-    if (todos[task].todoID === taskID) {
-      todos = todos.filter((todo) => todo.todoID != taskID);
-      showTasks();
-    }
-  }
-}
-//end of delete individual tasks
-
-//TODO: Complete Todo
+//DONE: Complete Todo
 //same as?
-//TODO: Edit Status
+//DONE: Edit Status
 //making tasks as completed
 function markingTaskAsDone(taskID) {
   for (let task in todos) {
