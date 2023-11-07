@@ -1,4 +1,4 @@
-let form = document.querySelector("#createTaskForm");
+//TODO:Data model should store all information about todos including (but not limited to):Todo name, Status, ID, Category, Due Date
 
 // preset categories
 let categories = [
@@ -43,6 +43,9 @@ let todos = [
   },
 ];
 
+let form = document.querySelector("#createTaskForm");
+
+//TODO: Add New Category
 //create new category
 let createCategoryBtn = document.querySelector("#createCategoryBtn");
 
@@ -68,51 +71,6 @@ createCategoryBtn.addEventListener("click", () => {
 
 //end of creation of drop-downs
 
-//we create a task in the first form area
-let createBtn = document.querySelector("#createTaskBtn");
-
-function createTask() {
-  let newText = document.querySelector("#tName");
-  let dueDate = document.querySelector("#dueDate");
-  let newCategory = {};
-
-//   for (let category in categories) {
-//     if (taskCategory.value === categories[category].name) {
-//       newCategory = categories[category];
-//     }
-  
-// else {
-//   // No category selected, set a default category
-//   newCategory = {
-//     name: "No Category",
-//     color: "#000",
-//   };
-// }}
-
-if(newCategory = {
-  name: "No Category",
-  color: "#000",
-}); else{
-  taskCategory.value === categories[category].name
-    newCategory = categories[category]
-}
-
-  let newTodo = {
-    todoID: todos.length,
-    todoName: newText.value,
-    todoCategory: newCategory,
-    todoComplete: false,
-    todoDueDate: dueDate.value,
-  };
-
-  todos.push(newTodo);
-  showTasks();
-}
-
-createBtn.addEventListener("click", () => {
-  createTask();
-});
-//end of task creation
 //create category
 // generate the categories dropdowns in the first area based on the preset categories and the ones that we create/delete/edit later on
 function showCategories() {
@@ -140,6 +98,48 @@ function countIncompleteTasks() {
   return count;
 }
 
+//TODO: Add New Todo
+//FIXME: Users need to be able to select a category when adding a new todo.
+//we create a task in the first form area
+let createBtn = document.querySelector("#createTaskBtn");
+
+function createTask() {
+  let newText = document.querySelector("#tName");
+  let dueDate = document.querySelector("#dueDate");
+  let newCategory = {};
+  if (taskCategory.value === categories[category].name) {
+    newCategory = categories[category];
+  }
+
+  //   for (let category in categories) {
+  //     if (taskCategory.value === categories[category].name) {
+  //       newCategory = categories[category];
+  //     }
+
+  // else {
+  //   // No category selected, set a default category
+  //   newCategory = {
+  //     name: "No Category",
+  //     color: "#000",
+  //   };
+  // }}
+
+  let newTodo = {
+    todoID: todos.length,
+    todoName: newText.value,
+    todoCategory: newCategory,
+    todoComplete: false,
+    todoDueDate: dueDate.value,
+  };
+
+  todos.push(newTodo);
+  showTasks();
+}
+
+createBtn.addEventListener("click", () => {
+  createTask();
+});
+//end of task creation
 // add and display tasks in the todolist
 function showTasks() {
   let todoList = document.querySelector("#todoList");
@@ -149,15 +149,16 @@ function showTasks() {
     //creation of the article/task
     //loop so it happens to every element?
     let taskItem = document.createElement("article"); //create item
+    //mark task as completed - color
     if (todos[task].todoComplete === true) {
       taskItem.style.color = "#ced4da";
     } else {
       taskItem.style.color = todos[task].todoCategory.color;
     }
-    taskItem.contentEditable = true;
 
     let removeTaskBtn = document.createElement("button"); //delete button
     removeTaskBtn.innerHTML = '<i class="fa-solid fa-delete-left"></i>';
+    //mark task as completed - color
     if (todos[task].todoComplete === true) {
       removeTaskBtn.style.color = "#ced4da";
     } else {
@@ -173,20 +174,21 @@ function showTasks() {
 
     let taskName = document.createElement("h3");
     taskName.textContent = todos[task].todoName; //task title
-
+    //mark task as completed - color
     if (todos[task].todoComplete === true) {
       taskName.style.color = "#ced4da";
     } else {
       taskName.style.color = todos[task].todoCategory.color;
     }
-
     taskItem.appendChild(taskName);
+    taskName.contentEditable = "plaintext-only";
 
     let taskCategory = document.createElement("h4"); //task category
     taskCategory.textContent = todos[task].todoCategory.name;
     // if (categories[category].todoCategory ==="") {
     //   category.name = "None"
     // }
+    //mark task as completed - color
     if (todos[task].todoComplete === true) {
       taskCategory.style.color = "#ced4da";
     } else {
@@ -196,15 +198,19 @@ function showTasks() {
 
     let taskDate = document.createElement("p"); //due date
     taskDate.textContent = todos[task].todoDueDate;
+    //mark task as completed - color
     if (todos[task].todoComplete === true) {
       taskDate.style.color = "#ced4da";
     } else {
       taskDate.style.color = todos[task].todoCategory.color;
     }
     taskItem.appendChild(taskDate);
+    //TODO: Edit Due Date
+    taskDate.contentEditable = "plaintext-only";
 
     let markAsDoneBtn = document.createElement("button"); //delete button
     markAsDoneBtn.innerHTML = '<i class="fa-solid fa-square-check"></i>';
+    //mark task as completed - color
     if (todos[task].todoComplete === true) {
       markAsDoneBtn.style.color = "#ced4da";
     } else {
@@ -239,6 +245,7 @@ function deleteAllCompletedTasks() {
 }
 //end of delete all completed tasks
 
+//TODO: Delete Todo
 //delete individual tasks
 function removeTaskFromList(taskID) {
   for (let task in todos) {
@@ -250,6 +257,9 @@ function removeTaskFromList(taskID) {
 }
 //end of delete individual tasks
 
+//TODO: Complete Todo
+//same as?
+//TODO: Edit Status
 //making tasks as completed
 function markingTaskAsDone(taskID) {
   for (let task in todos) {
@@ -261,6 +271,7 @@ function markingTaskAsDone(taskID) {
 }
 //end of marking tasks as completed
 
+//FIXME: Delete Category
 //delete category
 function deleteCategories() {
   let taskCategory = document.querySelector("#deleteCategorySelection");
@@ -299,6 +310,9 @@ deleteCategoryBtn.addEventListener("click", () => {
 });
 //end of delete category
 
+//FIXME: Edit Category (be sure to update all existing todos with the edited category)
+//same as?
+//FIXME: Edit Todos (be sure to update all existing todos with the edited category)
 //edit categories
 function editCategories() {
   let taskCategory = document.querySelector("#editCategorySelection");
@@ -337,3 +351,5 @@ function editACategory() {
   });
 }
 //end of edit categories
+
+//TODO: Users need to be able to view todos by category (filter by category)
