@@ -45,8 +45,8 @@ let todos = [
 
 let form = document.querySelector("#createTaskForm");
 
-//TODO: Add New Category
-//FIXME: allow new tasks to show any category + have a color
+//DONE: Add New Category
+//DONE: allow new tasks to show any category + have a color
 //create new category
 let createCategoryBtn = document.querySelector("#createCategoryBtn");
 
