@@ -99,8 +99,8 @@ function countIncompleteTasks() {
   return count;
 }
 
-//TODO: Add New Todo
-//FIXME: Users need to be able to select a category when adding a new todo.
+//DONE: Add New Todo
+//DONE: Users need to be able to select a category when adding a new todo.
 //we create a task in the first form area
 let createBtn = document.querySelector("#createTaskBtn");
 
@@ -108,22 +108,21 @@ function createTask() {
   let newText = document.querySelector("#tName");
   let dueDate = document.querySelector("#dueDate");
   let newCategory = {};
-  if (taskCategory.value === categories[category].name) {
-    newCategory = categories[category];
+  // if (taskCategory.value === categories[category].name) {
+  //   newCategory = categories[category];
+  // }
+
+    for (let category in categories) {
+      if (taskCategory.value === categories[category].name) {
+        newCategory = categories[category];
+      }
+  else if(taskCategory.value === "")
+    // No category selected, set a default category
+    newCategory = {
+      name: "No Category",
+      color: "#000",
+    };
   }
-
-  //   for (let category in categories) {
-  //     if (taskCategory.value === categories[category].name) {
-  //       newCategory = categories[category];
-  //     }
-
-  // else {
-  //   // No category selected, set a default category
-  //   newCategory = {
-  //     name: "No Category",
-  //     color: "#000",
-  //   };
-  // }}
 
   let newTodo = {
     todoID: todos.length,
