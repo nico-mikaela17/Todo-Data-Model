@@ -1,5 +1,5 @@
 //DONE:Data model should store all information about todos including (but not limited to):Todo name, Status, ID, Category, Due Date
-
+//FIXME: add ID, also add ID to new categories, and when deleting categories use that id instead of name
 // preset categories
 let categories = [
   { name: "School", color: "#275d38" },
@@ -63,6 +63,7 @@ function createNewCategory() {
   showCategories();
   deleteCategories();
   editCategories();
+  filterTasksByCategory();
 }
 
 createCategoryBtn.addEventListener("click", () => {
@@ -112,16 +113,15 @@ function createTask() {
   //   newCategory = categories[category];
   // }
 
-    for (let category in categories) {
-      if (taskCategory.value === categories[category].name) {
-        newCategory = categories[category];
-      }
-  else if(taskCategory.value === "")
-    // No category selected, set a default category
-    newCategory = {
-      name: "No Category",
-      color: "#000",
-    };
+  for (let category in categories) {
+    if (taskCategory.value === categories[category].name) {
+      newCategory = categories[category];
+    } else if (taskCategory.value === "")
+      // No category selected, set a default category
+      newCategory = {
+        name: "No Category",
+        color: "#000",
+      };
   }
 
   let newTodo = {
@@ -185,6 +185,7 @@ function showTasks() {
 
     let taskCategory = document.createElement("h4"); //task category
     taskCategory.textContent = todos[task].todoCategory.name;
+    //FIXME: if (2 statements: delete and edit) statement might help to connect the id and if it's not there, change it to empty or no category
     // if (categories[category].todoCategory ==="") {
     //   category.name = "None"
     // }
@@ -270,7 +271,7 @@ function markingTaskAsDone(taskID) {
 }
 //end of marking tasks as completed
 
-//FIXME: Delete Category
+//FIXME: Delete Category, it comes out of the select drop down but I want it to be gone from the task
 //delete category
 function deleteCategories() {
   let taskCategory = document.querySelector("#deleteCategorySelection");
@@ -300,6 +301,7 @@ function deleteCategory(categoryName) {
       deleteCategories();
       showCategories();
       editCategories();
+      filterTasksByCategory();
     }
   });
 }
@@ -352,3 +354,36 @@ function editACategory() {
 //end of edit categories
 
 //TODO: Users need to be able to view todos by category (filter by category)
+function filterTasksByCategory(category) {
+  let categoryFilterSelector = document.querySelector(
+    "#categoryFilterSelector"
+  );
+  categoryFilterSelector.innerHTML = '<option value="">Please Select</option>';
+
+  for (let category in categories) {
+    let categoryName = document.createElement("option");
+    categoryName.value = categories[category].name;
+    categoryName.textContent = categories[category].name;
+
+    categoryFilterSelector.appendChild(categoryName);
+
+    // return todoList.filter((todo) => todo.todoCategory[0].categories.name === category)
+  }
+  
+}
+filterTasksByCategory();
+
+
+// typeSelector.addEventListener('change', (event) => {
+//   const usersTypeChoice = event.target.value.toLowerCase()
+//  if(event.target.value === 'Show all'){
+//   removeChildren(pokeGrid)
+//   todoList.forEach((singletask) => {
+//     populatePokeCard(singletask)})
+//    } else{
+//   const taskByType = filterTasksByCategory(usersTypeChoice)
+//   removeChildren(pokeGrid)
+//   taskByType.forEach((eachSingletask) => populatePokeCard(eachSingletask))
+//   calculateHP()
+// }
+// })
