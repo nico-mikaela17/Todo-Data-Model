@@ -2,13 +2,13 @@
 //FIXME: add ID, also add ID to new categories, and when deleting categories use that id instead of name
 // preset categories
 let categories = [
-  { name: "School", color: "#275d38" },
+  { name: "School", color: "#275d38", ID: 0 },
 
-  { name: "Work", color: "#0065A4" },
+  { name: "Work", color: "#0065A4", ID: 1 },
 
-  { name: "Chores", color: "#9d4edd" },
+  { name: "Chores", color: "#9d4edd", ID: 2 },
 
-  { name: "Dates", color: "#c9184a" },
+  { name: "Dates", color: "#c9184a", ID: 3 },
 ];
 
 // preset todos so I can see different colors and layout
@@ -57,7 +57,9 @@ function createNewCategory() {
   let newCategory = {
     name: newCategoryItem.value,
     color: colorCategory.value,
+    ID: categories.length + 1,
   };
+  console.log(newCategory.ID);
 
   categories.push(newCategory);
   showCategories();
@@ -127,7 +129,7 @@ function createTask() {
   let newTodo = {
     todoID: todos.length,
     todoName: newText.value,
-    todoCategory: newCategory,
+    todoCategory: newCategory.ID,
     todoComplete: false,
     todoDueDate: dueDate.value,
   };
@@ -186,9 +188,15 @@ function showTasks() {
     let taskCategory = document.createElement("h4"); //task category
     taskCategory.textContent = todos[task].todoCategory.name;
     //FIXME: if (2 statements: delete and edit) statement might help to connect the id and if it's not there, change it to empty or no category
-    // if (categories[category].todoCategory ==="") {
-    //   category.name = "None"
-    // }
+
+    if (todos[task] && !todos[task].todoCategory) {
+      todos[task].todoCategory = { ID: "" }; // Set the category to "No category"
+    }
+    if (todos[task].todoCategory.ID === "") {
+      taskCategory.textContent = "No category";
+    }
+    console.log(todos);
+
     //mark task as completed - color
     if (todos[task].todoComplete === true) {
       taskCategory.style.color = "#ced4da";
@@ -273,6 +281,7 @@ function markingTaskAsDone(taskID) {
 
 //FIXME: Delete Category, it comes out of the select drop down but I want it to be gone from the task
 //delete category
+
 function deleteCategories() {
   let taskCategory = document.querySelector("#deleteCategorySelection");
   taskCategory.innerHTML = '<option value="">Please Select</option>';
@@ -309,6 +318,7 @@ function deleteCategory(categoryName) {
 deleteCategoryBtn.addEventListener("click", () => {
   deleteCategory(deleteCategorySelection.value);
 });
+
 //end of delete category
 
 //FIXME: Edit Category (be sure to update all existing todos with the edited category)
@@ -369,10 +379,8 @@ function filterTasksByCategory(category) {
 
     // return todoList.filter((todo) => todo.todoCategory[0].categories.name === category)
   }
-  
 }
 filterTasksByCategory();
-
 
 // typeSelector.addEventListener('change', (event) => {
 //   const usersTypeChoice = event.target.value.toLowerCase()
