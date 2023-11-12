@@ -357,6 +357,7 @@ function editACategory() {
       showCategories();
       deleteCategories();
       editCategories();
+      filterTasksByCategory();
       return;
     }
   });
@@ -368,18 +369,38 @@ function filterTasksByCategory(category) {
   let categoryFilterSelector = document.querySelector(
     "#categoryFilterSelector"
   );
-  categoryFilterSelector.innerHTML = '<option value="">Please Select</option>';
-
-  for (let category in categories) {
-    let categoryName = document.createElement("option");
-    categoryName.value = categories[category].name;
-    categoryName.textContent = categories[category].name;
-
-    categoryFilterSelector.appendChild(categoryName);
-
-    // return todoList.filter((todo) => todo.todoCategory[0].categories.name === category)
+  function removeChildren(container) {
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
+    }
   }
+
+  categoryFilterSelector.addEventListener("change", (event) => {
+    const userChoice = event.target.value;
+    if (event.target.value === "Please Select") {
+      removeChildren(todoList);
+      todoList.forEach((task) => {
+        showTasks();
+      });
+    } else {
+      const taskByType = filterTasksByCategory(userChoice);
+      removeChildren(todoList);
+      taskByType.forEach((eachSingletask) => showTasks(eachSingletask));
+    }
+  });
 }
+categoryFilterSelector.innerHTML = '<option value="">Please Select</option>';
+
+for (let category in categories) {
+  let categoryName = document.createElement("option");
+  categoryName.value = categories[category].name;
+  categoryName.textContent = categories[category].name;
+
+  categoryFilterSelector.appendChild(categoryName);
+
+  // return todoList.filter((todo) => todo.todoCategory[0].categories.name === category)
+}
+
 filterTasksByCategory();
 
 // typeSelector.addEventListener('change', (event) => {
