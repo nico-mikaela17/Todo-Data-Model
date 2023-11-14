@@ -83,7 +83,7 @@ function showCategories() {
 
   for (let category in categories) {
     let newCategoryName = document.createElement("option");
-    newCategoryName.value = categories[category].name;
+    newCategoryName.value = categories[category].ID;
     newCategoryName.textContent = categories[category].name;
 
     taskCategory.appendChild(newCategoryName);
@@ -116,7 +116,7 @@ function createTask() {
   // }
 
   for (let category in categories) {
-    if (taskCategory.value === categories[category].name) {
+    if (taskCategory.value === categories[category].ID) {
       newCategory = categories[category];
     } else if (taskCategory.value === "")
       // No category selected, set a default category
@@ -128,7 +128,7 @@ function createTask() {
 
   let newTodo = {
     todoID: todos.length,
-    todoName: newText.value,
+    todoName: newText.name,
     todoCategory: newCategory.ID,
     todoComplete: false,
     todoDueDate: dueDate.value,
@@ -243,6 +243,14 @@ function showTasks() {
 showTasks(); // so it shows the tasks that I create
 //end of display tasks in the todolist
 
+// let finalTodos = todos.map(todo =>{
+//  categories.forEach(cat =>)
+//   return{
+//     todoText: todos.todoName,
+//     category: "",
+//   }
+// })
+
 //DONE: Delete Todo
 //delete individual tasks
 function removeTaskFromList(taskID) {
@@ -288,7 +296,7 @@ function deleteCategories() {
 
   for (let category in categories) {
     let deleteCategoryName = document.createElement("option");
-    deleteCategoryName.value = categories[category].name;
+    deleteCategoryName.value = categories[category].ID;
     deleteCategoryName.textContent = categories[category].name;
 
     taskCategory.appendChild(deleteCategoryName);
@@ -331,7 +339,7 @@ function editCategories() {
 
   for (let category in categories) {
     let categoryName = document.createElement("option");
-    categoryName.value = categories[category].name;
+    categoryName.value = categories[category].ID;
     categoryName.textContent = categories[category].name;
 
     taskCategory.appendChild(categoryName);
@@ -351,8 +359,8 @@ function editACategory() {
   );
 
   categories.forEach((category) => {
-    if (category.name === editedCategorySelection.value) {
-      category.name = editedCategoryItem.value;
+    if (category.ID === editedCategorySelection.value) {
+      category.ID = editedCategoryItem.value;
       editedCategoryItem.value = "";
       showCategories();
       deleteCategories();
