@@ -23,7 +23,7 @@
     <header>To-do List</header>
     <main>
       <!--First area to make your own task and add it to the to-do list-->
-      <div id="createTaskForm">
+      <form id="createTaskForm">
         <div id="taskName">
           <h3>Choose a Task Name</h3>
           <input id="tName" type="text" placeholder="Task Name" />
@@ -36,8 +36,8 @@
           <h3>Due Date</h3>
           <input type="date" id="dueDate" value="" />
         </div>
-        <button id="createTaskBtn">Create Task</button>
-      </div>
+        <button type="submit" id="createTaskBtn">Create Task</button>
+      </form>
       <!--Area to make your own category and add it to the category drop down in the first area-->
       <div id="categoryForm">
         <div class="createCategorySection">
@@ -90,7 +90,6 @@
 
     <footer>Created by Nicole Linnarz</footer>
 
-    <script src="src/index.js" type="module"></script>
     <script type="text/javascript" src="src/index.js"></script>
   </body>
 </html>

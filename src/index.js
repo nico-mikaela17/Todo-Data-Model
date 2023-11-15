@@ -357,6 +357,8 @@ function editACategory() {
   let editedCategorySelection = document.querySelector(
     "#editCategorySelection"
   );
+  editedCategorySelection.value = todos[category].value;
+
 
   categories.forEach((category) => {
     if (category.ID === editedCategorySelection.value) {
@@ -370,6 +372,7 @@ function editACategory() {
     }
   });
 }
+
 //end of edit categories
 
 //TODO: Users need to be able to view todos by category (filter by category)
