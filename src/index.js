@@ -57,9 +57,8 @@ function createNewCategory() {
   let newCategory = {
     name: newCategoryItem.value,
     color: colorCategory.value,
-    ID: categories.length + 1,
+    // ID: categories.length + 1,
   };
-  console.log(newCategory.ID);
 
   categories.push(newCategory);
   showCategories();
@@ -71,6 +70,7 @@ function createNewCategory() {
 createCategoryBtn.addEventListener("click", () => {
   createNewCategory();
 });
+
 //end of create new category
 
 //end of creation of drop-downs
@@ -83,7 +83,7 @@ function showCategories() {
 
   for (let category in categories) {
     let newCategoryName = document.createElement("option");
-    newCategoryName.value = categories[category].ID;
+    newCategoryName.value = categories[category].value;
     newCategoryName.textContent = categories[category].name;
 
     taskCategory.appendChild(newCategoryName);
@@ -116,14 +116,16 @@ function createTask() {
   // }
 
   for (let category in categories) {
-    if (taskCategory.value === categories[category].ID) {
+    if (taskCategory.value === categories[category].value) {
       newCategory = categories[category];
-    } else if (taskCategory.value === "")
-      // No category selected, set a default category
-      newCategory = {
-        name: "No Category",
-        color: "#000",
-      };
+    // } else if (taskCategory.value === ""){
+    //   // No category selected, set a default category
+    //   newCategory = {
+    //     name: "No Category",
+    //     color: "#000",
+    //     // ID: categories.length + 1,
+    //   }
+       };
   }
 
   let newTodo = {
@@ -139,7 +141,10 @@ function createTask() {
 }
 
 createBtn.addEventListener("click", () => {
+  console.log("button");
+
   createTask();
+  showTasks()
 });
 //end of task creation
 // add and display tasks in the todolist
@@ -192,10 +197,9 @@ function showTasks() {
     if (todos[task] && !todos[task].todoCategory) {
       todos[task].todoCategory = { ID: "" }; // Set the category to "No category"
     }
-    if (todos[task].todoCategory.ID === "") {
+    if (todos[task].todoCategory.value === "") {
       taskCategory.textContent = "No category";
     }
-    console.log(todos);
 
     //mark task as completed - color
     if (todos[task].todoComplete === true) {
@@ -358,7 +362,6 @@ function editACategory() {
     "#editCategorySelection"
   );
   editedCategorySelection.value = todos[category].value;
-
 
   categories.forEach((category) => {
     if (category.ID === editedCategorySelection.value) {
