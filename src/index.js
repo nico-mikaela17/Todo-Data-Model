@@ -77,13 +77,13 @@ createCategoryBtn.addEventListener("click", () => {
 
 //create category
 // generate the categories dropdowns in the first area based on the preset categories and the ones that we create/delete/edit later on
+let taskCategory = document.querySelector("#taskCategory");
 function showCategories() {
-  let taskCategory = document.querySelector("#taskCategory");
   taskCategory.innerHTML = '<option value="">Please Select</option>';
 
   for (let category in categories) {
     let newCategoryName = document.createElement("option");
-    newCategoryName.value = categories[category].value;
+    newCategoryName.value = categories[category].ID;
     newCategoryName.textContent = categories[category].name;
 
     taskCategory.appendChild(newCategoryName);
@@ -116,22 +116,22 @@ function createTask() {
   // }
 
   for (let category in categories) {
-    if (taskCategory.value === categories[category].value) {
+    if (Number(taskCategory.value) === categories[category].ID) {
       newCategory = categories[category];
-    // } else if (taskCategory.value === ""){
-    //   // No category selected, set a default category
-    //   newCategory = {
-    //     name: "No Category",
-    //     color: "#000",
-    //     // ID: categories.length + 1,
-    //   }
-       };
+      // } else if (taskCategory.value === ""){
+      //   // No category selected, set a default category
+      //   newCategory = {
+      //     name: "No Category",
+      //     color: "#000",
+      //     // ID: categories.length + 1,
+      //   }
+    }
   }
 
   let newTodo = {
     todoID: todos.length,
-    todoName: newText.name,
-    todoCategory: newCategory.ID,
+    todoName: newText.value,
+    todoCategory: newCategory,
     todoComplete: false,
     todoDueDate: dueDate.value,
   };
@@ -144,11 +144,12 @@ createBtn.addEventListener("click", () => {
   console.log("button");
 
   createTask();
-  showTasks()
+  showTasks();
 });
 //end of task creation
 // add and display tasks in the todolist
 function showTasks() {
+  console.log(todos);
   let todoList = document.querySelector("#todoList");
   todoList.innerHTML = "";
 
@@ -269,12 +270,9 @@ function removeTaskFromList(taskID) {
 //delete all completed tasks
 let clearDoneButton = document.querySelector("#clearDoneButton");
 clearDoneButton.addEventListener("click", () => {
-  deleteAllCompletedTasks();
-});
-function deleteAllCompletedTasks() {
   todos = todos.filter((todo) => todo.todoComplete != true);
   showTasks();
-}
+});
 //end of delete all completed tasks
 
 //DONE: Complete Todo
@@ -284,7 +282,8 @@ function deleteAllCompletedTasks() {
 function markingTaskAsDone(taskID) {
   for (let task in todos) {
     if (todos[task].todoID === taskID) {
-      todos[task].todoComplete = true;
+      //todos[task].todoComplete = true;
+      todos[task].todoComplete = !todos[task].todoComplete;
       showTasks();
     }
   }
@@ -293,31 +292,27 @@ function markingTaskAsDone(taskID) {
 
 //FIXME: Delete Category, it comes out of the select drop down but I want it to be gone from the task
 //delete category
-
+let categoryToDelete = document.querySelector("#deleteCategorySelection");
 function deleteCategories() {
-  let taskCategory = document.querySelector("#deleteCategorySelection");
-  taskCategory.innerHTML = '<option value="">Please Select</option>';
+  categoryToDelete.innerHTML = '<option value="">Please Select</option>';
 
   for (let category in categories) {
     let deleteCategoryName = document.createElement("option");
     deleteCategoryName.value = categories[category].ID;
     deleteCategoryName.textContent = categories[category].name;
 
-    taskCategory.appendChild(deleteCategoryName);
+    categoryToDelete.appendChild(deleteCategoryName);
   }
 }
 deleteCategories();
 
 let deleteCategoryBtn = document.querySelector("#deleteCategoryBtn");
-let deleteCategorySelection = document.querySelector(
-  "#deleteCategorySelection"
-);
 
-function deleteCategory(categoryName) {
+deleteCategoryBtn.addEventListener("click", () => {
   categories.forEach((category) => {
-    if (category.name === categoryName) {
+    if (category.ID === Number(categoryToDelete.value)) {
       categories = categories.filter(
-        (category) => category.name != categoryName
+        (category) => category.ID != Number(categoryToDelete.value)
       );
       deleteCategories();
       showCategories();
@@ -325,11 +320,15 @@ function deleteCategory(categoryName) {
       filterTasksByCategory();
     }
   });
-}
-
-deleteCategoryBtn.addEventListener("click", () => {
-  deleteCategory(deleteCategorySelection.value);
 });
+
+/* Some kind of function that checks the category assigned to each todo to make sure
+that category still exists/wasn't edited */
+function checkCategories() {
+  // loop through todos
+  // check that the category exists if statement
+  // if it doesn't exist do something
+}
 
 //end of delete category
 
@@ -338,15 +337,15 @@ deleteCategoryBtn.addEventListener("click", () => {
 //FIXME: Edit Todos (be sure to update all existing todos with the edited category)
 //edit categories
 function editCategories() {
-  let taskCategory = document.querySelector("#editCategorySelection");
-  taskCategory.innerHTML = '<option value="">Please Select</option>';
+  let categoryFilterSelector = document.querySelector("#editCategorySelection");
+  categoryFilterSelector.innerHTML = '<option value="">Please Select</option>';
 
   for (let category in categories) {
     let categoryName = document.createElement("option");
     categoryName.value = categories[category].ID;
     categoryName.textContent = categories[category].name;
 
-    taskCategory.appendChild(categoryName);
+    categoryFilterSelector.appendChild(categoryName);
   }
 }
 editCategories();
@@ -379,30 +378,39 @@ function editACategory() {
 //end of edit categories
 
 //TODO: Users need to be able to view todos by category (filter by category)
-function filterTasksByCategory(category) {
-  let categoryFilterSelector = document.querySelector(
-    "#categoryFilterSelector"
-  );
-  function removeChildren(container) {
+let categoryFilterSelector = document.querySelector("#categoryFilterSelector");
+function filterTasksByCategory() {
+  categoryFilterSelector.innerHTML = '<option value="">Please Select</option>';
+
+  for (let category in categories) {
+    let categoryName = document.createElement("option");
+    categoryName.value = categories[category].ID;
+    categoryName.textContent = categories[category].name;
+
+    categoryFilterSelector.appendChild(categoryName);
+  }
+  /*   function removeChildren(container) {
     while (container.firstChild) {
       container.removeChild(container.firstChild);
     }
-  }
-
-  categoryFilterSelector.addEventListener("change", (event) => {
-    const userChoice = event.target.value;
-    if (event.target.value === "Please Select") {
-      removeChildren(todoList);
-      todoList.forEach((task) => {
-        showTasks();
-      });
-    } else {
-      const taskByType = filterTasksByCategory(userChoice);
-      removeChildren(todoList);
-      taskByType.forEach((eachSingletask) => showTasks(eachSingletask));
-    }
-  });
+  } */
 }
+
+categoryFilterSelector.addEventListener("change", (event) => {
+  const userChoice = event.target.value;
+  // If the value is one of the category ID's, you're showing that category
+  // Type check that you're comparing numbers Number(event.target.value) === categories[category].ID
+  if (event.target.value === "") {
+    removeChildren(todoList);
+    todoList.forEach((task) => {
+      showTasks();
+    });
+  } else {
+    const taskByType = filterTasksByCategory(userChoice);
+    removeChildren(todoList);
+    taskByType.forEach((eachSingletask) => showTasks(eachSingletask));
+  }
+});
 categoryFilterSelector.innerHTML = '<option value="">Please Select</option>';
 
 for (let category in categories) {
