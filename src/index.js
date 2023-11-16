@@ -148,9 +148,9 @@ createBtn.addEventListener("click", () => {
 });
 //end of task creation
 // add and display tasks in the todolist
+let todoList = document.querySelector("#todoList");
 function showTasks() {
   console.log(todos);
-  let todoList = document.querySelector("#todoList");
   todoList.innerHTML = "";
 
   for (let task in todos) {
@@ -318,7 +318,7 @@ deleteCategoryBtn.addEventListener("click", () => {
       showCategories();
       editCategories();
       filterTasksByCategory();
-      noCategory()
+      noCategory();
     }
   });
 });
@@ -335,25 +335,25 @@ function checkCategories(ID) {
   //   }
   // }
   let match;
-  categories.forEach((category) =>{
-    if(ID === category.ID){
+  categories.forEach((category) => {
+    if (ID === category.ID) {
       match = category;
     }
   });
-  if(!match) {
-    match = { name: "No category", color: "#000", ID: -1 };  
+  if (!match) {
+    match = { name: "No category", color: "#000", ID: -1 };
   }
-  return match}
+  return match;
+}
 
-  function noCategory(){
-    todos.forEach((todo) => {
-      todo.todoCategory= checkCategories(todo.todoCategory.name)
-    })
-  }
-  // loop through todos
-  // check that the category exists if statement
-  // if it doesn't exist do something
-
+function noCategory() {
+  todos.forEach((todo) => {
+    todo.todoCategory = checkCategories(todo.todoCategory.name);
+  });
+}
+// loop through todos
+// check that the category exists if statement
+// if it doesn't exist do something
 
 //end of delete category
 
@@ -421,45 +421,49 @@ function filterTasksByCategory() {
   } */
 }
 
-categoryFilterSelector.addEventListener("change", (event) => {
-  const userChoice = event.target.value;
-  // If the value is one of the category ID's, you're showing that category
-  // Type check that you're comparing numbers Number(event.target.value) === categories[category].ID
-  if (event.target.value === "") {
-    removeChildren(todoList);
-    todoList.forEach((task) => {
-      showTasks();
-    });
-  } else {
-    const taskByType = filterTasksByCategory(userChoice);
-    removeChildren(todoList);
-    taskByType.forEach((eachSingletask) => showTasks(eachSingletask));
+function removeChildren(container) {
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
   }
-});
+}
+
 categoryFilterSelector.innerHTML = '<option value="">Please Select</option>';
 
 for (let category in categories) {
   let categoryName = document.createElement("option");
-  categoryName.value = categories[category].name;
+  categoryName.value = categories[category].ID;
   categoryName.textContent = categories[category].name;
 
   categoryFilterSelector.appendChild(categoryName);
 
-  // return todoList.filter((todo) => todo.todoCategory[0].categories.name === category)
+  categoryFilterSelector.addEventListener("change", filterEntries, false);
+  function filterEntries() {
+    console.log("working");
+    for (let i = 1; i < taskItem.length; i++) {
+      if (category == categoryName.value) {
+        taskItem.style.display = "";
+      } else {
+        taskItem.style.display = "none";
+      }
+    }
+  }
 }
 
 filterTasksByCategory();
 
-// typeSelector.addEventListener('change', (event) => {
-//   const usersTypeChoice = event.target.value.toLowerCase()
-//  if(event.target.value === 'Show all'){
-//   removeChildren(pokeGrid)
-//   todoList.forEach((singletask) => {
-//     populatePokeCard(singletask)})
-//    } else{
-//   const taskByType = filterTasksByCategory(usersTypeChoice)
-//   removeChildren(pokeGrid)
-//   taskByType.forEach((eachSingletask) => populatePokeCard(eachSingletask))
-//   calculateHP()
-// }
-// })
+// ("change", (event) => {
+//   const userChoice = event.target.value;
+//   // If the value is one of the category ID's, you're showing that category
+//   // Type check that you're comparing numbers Number(event.target.value) === categories[category].ID
+//   if (event.target.value === "") {
+//     removeChildren(todoList);
+//     todoList.forEach((task) => {
+//       showTasks();
+//     });
+//   } else {
+//     const taskByType = filterTasksByCategory(userChoice);
+//     removeChildren(todoList);
+//     taskByType.forEach((eachSingletask) => showTasks(eachSingletask));
+//   }
+// });
+// return todoList.filter((todo) => todo.todoCategory[0].categories.name === category)
