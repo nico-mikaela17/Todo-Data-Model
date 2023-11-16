@@ -318,17 +318,42 @@ deleteCategoryBtn.addEventListener("click", () => {
       showCategories();
       editCategories();
       filterTasksByCategory();
+      noCategory()
     }
   });
 });
 
 /* Some kind of function that checks the category assigned to each todo to make sure
 that category still exists/wasn't edited */
-function checkCategories() {
+function checkCategories(ID) {
+  //   for (let task in todos) {
+  //     if (todos[task].todoCategory === category) {
+  //       //todos[task].todoComplete = true;
+  //       todos[task].todoCategory = "";
+  //       showTasks();
+  //     }
+  //   }
+  // }
+  let match;
+  categories.forEach((category) =>{
+    if(ID === category.ID){
+      match = category;
+    }
+  });
+  if(!match) {
+    match = { name: "No category", color: "#000", ID: -1 };  
+  }
+  return match}
+
+  function noCategory(){
+    todos.forEach((todo) => {
+      todo.todoCategory= checkCategories(todo.todoCategory.name)
+    })
+  }
   // loop through todos
   // check that the category exists if statement
   // if it doesn't exist do something
-}
+
 
 //end of delete category
 
