@@ -57,7 +57,7 @@ function createNewCategory() {
   let newCategory = {
     name: newCategoryItem.value,
     color: colorCategory.value,
-    // ID: categories.length + 1,
+    ID: categories.length + 1,
   };
 
   categories.push(newCategory);
