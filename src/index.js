@@ -1,10 +1,17 @@
+// 1. Refactor showTask() function to use the new displayTodos.
+// 2. When editing catagories, you will need to edit/update the catagories array then call showTasks()
+// 3. what happens if you delete a catagory, and a todo references a non-existing todo?
+//    3a. Hint. this will happen in the combinedTodos() function
+
+
+
 //DONE:Data model should store all information about todos including (but not limited to):Todo name, Status, ID, Category, Due Date
 //FIXME: add ID, also add ID to new categories, and when deleting categories use that id instead of name
 // preset categories
 let categories = [
   { name: "School", color: "#275d38", ID: 0 },
 
-  { name: "Work", color: "#0065A4", ID: 1 },
+  { name: "Office", color: "#0065A4", ID: 1 },
 
   { name: "Chores", color: "#9d4edd", ID: 2 },
 
@@ -16,32 +23,54 @@ let todos = [
   {
     todoID: 0,
     todoName: "Finish Homework",
-    todoCategory: categories[0],
+    todoCategory: 0 ,
     todoComplete: false,
     todoDueDate: "2023-09-02",
   },
   {
     todoID: 1,
     todoName: "Collections List",
-    todoCategory: categories[1],
+    todoCategory: 1,
     todoComplete: false,
     todoDueDate: "2023-09-18",
   },
   {
     todoID: 2,
     todoName: "Mop the kitchen",
-    todoCategory: categories[2],
+    todoCategory: 2,
     todoComplete: false,
     todoDueDate: "2023-09-13",
   },
   {
     todoID: 3,
     todoName: "Trip to Maryland",
-    todoCategory: categories[3],
+    todoCategory: 3,
     todoComplete: false,
     todoDueDate: "2023-09-21",
   },
 ];
+
+//create a new array of todos, that is used to show/display the todos and catagories
+//this will need to be called/used any time we are updating the UI/DOM
+function combinedTodos() {
+
+  let finalTodos = todos.map(todo => {
+
+    let todoCat = categories.find(cat => cat.ID === todo.todoCategory)
+
+    //if todoCat is Undefined, define todocat with and object with no Category.
+
+    return {
+      todoName: todo.todoName,
+      category: todoCat.name,
+      todoComplete: todo.todoComplete,
+      todoDueDate: todo.todoDueDate,
+      color: todoCat.color
+    }
+  })
+  
+  return finalTodos
+}
 
 let form = document.querySelector("#createTaskForm");
 
@@ -83,8 +112,8 @@ function showCategories() {
 
   for (let category in categories) {
     let newCategoryName = document.createElement("option");
-    newCategoryName.value = categories[category].ID;
-    newCategoryName.textContent = categories[category].name;
+    newCategoryName.value = category.ID;
+    newCategoryName.textContent = category.name;
 
     taskCategory.appendChild(newCategoryName);
   }
@@ -150,10 +179,14 @@ createBtn.addEventListener("click", () => {
 // add and display tasks in the todolist
 let todoList = document.querySelector("#todoList");
 function showTasks() {
-  console.log(todos);
+  // console.log(todos);
   todoList.innerHTML = "";
 
-  for (let task in todos) {
+  let displayTodos = combinedTodos()
+
+  console.log(displayTodos)
+
+  for (let task in displayTodos) {
     //creation of the article/task
     //loop so it happens to every element?
     let taskItem = document.createElement("article"); //create item
