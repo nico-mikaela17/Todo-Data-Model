@@ -348,8 +348,17 @@ function checkCategories(ID) {
 
 function noCategory() {
   todos.forEach((todo) => {
-    todo.todoCategory = checkCategories(todo.todoCategory.name);
+    categories.forEach((category) => {
+      todo.todoCategory = checkCategories(todo.todoCategory.name);
+      if (category.ID === Number(categoryToDelete.value)) {
+        categories = categories.filter(
+          (category) => category.ID != Number(categoryToDelete.value)
+        );
+      }
+    });
   });
+  
+  showTasks();
 }
 // loop through todos
 // check that the category exists if statement
