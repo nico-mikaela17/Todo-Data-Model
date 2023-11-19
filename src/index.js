@@ -52,8 +52,7 @@ let todos = [
 //this will need to be called/used any time we are updating the UI/DOM
 function combinedTodos() {
   let finalTodos = todos.map((todo) => {
-    let todoCat = categories;
-    categories.find((cat) => cat.ID === todo.todoCategory);
+    let todoCat = categories.find((cat) => cat.ID === todo.todoCategory);
 
     //FIXME:if todoCat is Undefined, define todocat with and object with no Category.
 
@@ -66,6 +65,8 @@ function combinedTodos() {
       color: todoCat.color,
     };
   });
+
+  console.log("combinedTodos: ", finalTodos);
 
   return finalTodos;
 }
@@ -121,8 +122,8 @@ showCategories();
 // How many tasks do I have left?
 function countIncompleteTasks() {
   let count = 0;
-  for (let displayTodo of displayTodos) {
-    if (displayTodo.todoComplete === false) {
+  for (let todo of todos) {
+    if (todo.todoComplete === false) {
       count++;
     }
   }
@@ -149,14 +150,22 @@ function createTask() {
   }
 
   let newTodo = {
-    todoID: todos.length,
+    todoID: todos.length + 1,
     todoName: newText.value,
-    todoCategory: newCategory,
+    todoCategory: Number(taskCategory.value),
     todoComplete: false,
     todoDueDate: dueDate.value,
   };
 
-  displayTodos.push(newTodo);
+  console.log("newTodo: ", newTodo);
+
+  // {
+  //   todoID: 3,
+  //   todoName: "Trip to Maryland",
+  //   todoCategory: 3,
+  //   todoComplete: false,
+
+  todos.push(newTodo);
   showTasks();
 }
 
@@ -165,11 +174,9 @@ createBtn.addEventListener("click", () => {
   showTasks();
 });
 //end of task creation
-// add and display tasks in the todolist
 let todoList = document.querySelector("#todoList");
-let displayTodos = combinedTodos();
 function showTasks() {
-  // console.log(todos);
+  let displayTodos = combinedTodos(); // console.log(todos);
   todoList.innerHTML = "";
 
   // displayTodos.forEach((task) => {
@@ -211,8 +218,8 @@ function showTasks() {
     }
     taskItem.appendChild(taskName);
     taskName.contentEditable = "plaintext-only";
-
     let taskCategory = document.createElement("h4"); //task category
+    console.log("cat: ", displayTodo);
     taskCategory.textContent = displayTodo.todoCategory;
     //FIXME: if (2 statements: delete and edit) statement might help to connect the id and if it's not there, change it to empty or no category
 
@@ -264,13 +271,10 @@ showTasks(); // so it shows the tasks that I create
 //DONE: Delete Todo
 //delete individual tasks
 function removeTaskFromList(taskID) {
-  for (let displayTodo in displayTodos) {
-    if (displayTodo.todoID === taskID) {
-      displayTodo = displayTodo.filter((todo) => todo.todoID != taskID);
-      showTasks();
-    }
-  }
+  todos = todos.filter((todo) => todo.todoID != taskID);
+  showTasks();
 }
+
 //end of delete individual tasks
 //delete all completed tasks
 let clearDoneButton = document.querySelector("#clearDoneButton");
