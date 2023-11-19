@@ -1,9 +1,7 @@
 // 1. Refactor showTask() function to use the new displayTodos.
-// 2. When editing catagories, you will need to edit/update the catagories array then call showTasks()
+
 // 3. what happens if you delete a catagory, and a todo references a non-existing todo?
 //    3a. Hint. this will happen in the combinedTodos() function
-
-
 
 //DONE:Data model should store all information about todos including (but not limited to):Todo name, Status, ID, Category, Due Date
 //FIXME: add ID, also add ID to new categories, and when deleting categories use that id instead of name
@@ -23,7 +21,7 @@ let todos = [
   {
     todoID: 0,
     todoName: "Finish Homework",
-    todoCategory: 0 ,
+    todoCategory: 0,
     todoComplete: false,
     todoDueDate: "2023-09-02",
   },
@@ -53,23 +51,23 @@ let todos = [
 //create a new array of todos, that is used to show/display the todos and catagories
 //this will need to be called/used any time we are updating the UI/DOM
 function combinedTodos() {
+  let finalTodos = todos.map((todo) => {
+    let todoCat = categories;
+    categories.find((cat) => cat.ID === todo.todoCategory);
 
-  let finalTodos = todos.map(todo => {
-
-    let todoCat = categories.find(cat => cat.ID === todo.todoCategory)
-
-    //if todoCat is Undefined, define todocat with and object with no Category.
+    //FIXME:if todoCat is Undefined, define todocat with and object with no Category.
 
     return {
+      todoID: todo.todoID,
       todoName: todo.todoName,
-      category: todoCat.name,
+      todoCategory: todoCat.name,
       todoComplete: todo.todoComplete,
       todoDueDate: todo.todoDueDate,
-      color: todoCat.color
-    }
-  })
-  
-  return finalTodos
+      color: todoCat.color,
+    };
+  });
+
+  return finalTodos;
 }
 
 let form = document.querySelector("#createTaskForm");
@@ -110,21 +108,21 @@ let taskCategory = document.querySelector("#taskCategory");
 function showCategories() {
   taskCategory.innerHTML = '<option value="">Please Select</option>';
 
-  for (let category in categories) {
+  categories.forEach((category) => {
     let newCategoryName = document.createElement("option");
     newCategoryName.value = category.ID;
     newCategoryName.textContent = category.name;
 
     taskCategory.appendChild(newCategoryName);
-  }
+  });
 }
 showCategories();
 
 // How many tasks do I have left?
 function countIncompleteTasks() {
   let count = 0;
-  for (let task in todos) {
-    if (todos[task].todoComplete === false) {
+  for (let displayTodo of displayTodos) {
+    if (displayTodo.todoComplete === false) {
       count++;
     }
   }
@@ -144,16 +142,9 @@ function createTask() {
   //   newCategory = categories[category];
   // }
 
-  for (let category in categories) {
-    if (Number(taskCategory.value) === categories[category].ID) {
-      newCategory = categories[category];
-      // } else if (taskCategory.value === ""){
-      //   // No category selected, set a default category
-      //   newCategory = {
-      //     name: "No Category",
-      //     color: "#000",
-      //     // ID: categories.length + 1,
-      //   }
+  for (let category of categories) {
+    if (Number(taskCategory.value) === category.ID) {
+      newCategory = category;
     }
   }
 
@@ -165,91 +156,81 @@ function createTask() {
     todoDueDate: dueDate.value,
   };
 
-  todos.push(newTodo);
+  displayTodos.push(newTodo);
   showTasks();
 }
 
 createBtn.addEventListener("click", () => {
-  console.log("button");
-
   createTask();
   showTasks();
 });
 //end of task creation
 // add and display tasks in the todolist
 let todoList = document.querySelector("#todoList");
+let displayTodos = combinedTodos();
 function showTasks() {
   // console.log(todos);
   todoList.innerHTML = "";
 
-  let displayTodos = combinedTodos()
+  // displayTodos.forEach((task) => {
 
-  console.log(displayTodos)
-
-  for (let task in displayTodos) {
+  for (let displayTodo of displayTodos) {
     //creation of the article/task
     //loop so it happens to every element?
     let taskItem = document.createElement("article"); //create item
     //mark task as completed - color
-    if (todos[task].todoComplete === true) {
+    if (displayTodo.todoComplete === true) {
       taskItem.style.color = "#ced4da";
     } else {
-      taskItem.style.color = todos[task].todoCategory.color;
+      taskItem.style.color = displayTodo.color;
     }
 
     let removeTaskBtn = document.createElement("button"); //delete button
     removeTaskBtn.innerHTML = '<i class="fa-solid fa-delete-left"></i>';
     //mark task as completed - color
-    if (todos[task].todoComplete === true) {
+    if (displayTodo.todoComplete === true) {
       removeTaskBtn.style.color = "#ced4da";
     } else {
-      removeTaskBtn.style.color = todos[task].todoCategory.color;
+      removeTaskBtn.style.color = displayTodo.color;
     }
     removeTaskBtn.style.border = "none";
     removeTaskBtn.style.float = "right";
     removeTaskBtn.style.cursor = "pointer";
     removeTaskBtn.onclick = function () {
-      removeTaskFromList(todos[task].todoID);
+      removeTaskFromList(displayTodo.todoID);
     };
     taskItem.appendChild(removeTaskBtn);
 
     let taskName = document.createElement("h3");
-    taskName.textContent = todos[task].todoName; //task title
+    taskName.textContent = displayTodo.todoName; //task title
     //mark task as completed - color
-    if (todos[task].todoComplete === true) {
+    if (displayTodo.todoComplete === true) {
       taskName.style.color = "#ced4da";
     } else {
-      taskName.style.color = todos[task].todoCategory.color;
+      taskName.style.color = displayTodo.color;
     }
     taskItem.appendChild(taskName);
     taskName.contentEditable = "plaintext-only";
 
     let taskCategory = document.createElement("h4"); //task category
-    taskCategory.textContent = todos[task].todoCategory.name;
+    taskCategory.textContent = displayTodo.todoCategory;
     //FIXME: if (2 statements: delete and edit) statement might help to connect the id and if it's not there, change it to empty or no category
 
-    if (todos[task] && !todos[task].todoCategory) {
-      todos[task].todoCategory = { ID: "" }; // Set the category to "No category"
-    }
-    if (todos[task].todoCategory.value === "") {
-      taskCategory.textContent = "No category";
-    }
-
     //mark task as completed - color
-    if (todos[task].todoComplete === true) {
+    if (displayTodo.todoComplete === true) {
       taskCategory.style.color = "#ced4da";
     } else {
-      taskCategory.style.color = todos[task].todoCategory.color;
+      taskCategory.style.color = displayTodo.color;
     }
     taskItem.appendChild(taskCategory);
 
     let taskDate = document.createElement("p"); //due date
-    taskDate.textContent = todos[task].todoDueDate;
+    taskDate.textContent = displayTodo.todoDueDate;
     //mark task as completed - color
-    if (todos[task].todoComplete === true) {
+    if (displayTodo.todoComplete === true) {
       taskDate.style.color = "#ced4da";
     } else {
-      taskDate.style.color = todos[task].todoCategory.color;
+      taskDate.style.color = displayTodo.color;
     }
     taskItem.appendChild(taskDate);
     //DONE: Edit Due Date
@@ -258,43 +239,34 @@ function showTasks() {
     let markAsDoneBtn = document.createElement("button"); //delete button
     markAsDoneBtn.innerHTML = '<i class="fa-solid fa-square-check"></i>';
     //mark task as completed - color
-    if (todos[task].todoComplete === true) {
+    if (displayTodos.todoComplete === true) {
       markAsDoneBtn.style.color = "#ced4da";
     } else {
-      markAsDoneBtn.style.color = todos[task].todoCategory.color;
+      markAsDoneBtn.style.color = displayTodo.color;
     }
     markAsDoneBtn.style.border = "none";
     markAsDoneBtn.style.float = "right";
     markAsDoneBtn.style.cursor = "pointer";
     markAsDoneBtn.onclick = function () {
-      markingTaskAsDone(todos[task].todoID);
+      markingTaskAsDone(displayTodo.todoID);
     };
     taskItem.appendChild(markAsDoneBtn);
 
     todoList.appendChild(taskItem);
   }
-
+  // )
   let pendingTasksCount = document.querySelector("#pendingTasksCounter");
   pendingTasksCount.textContent = `You have ${countIncompleteTasks()} pending tasks`;
 }
-
 showTasks(); // so it shows the tasks that I create
 //end of display tasks in the todolist
-
-// let finalTodos = todos.map(todo =>{
-//  categories.forEach(cat =>)
-//   return{
-//     todoText: todos.todoName,
-//     category: "",
-//   }
-// })
 
 //DONE: Delete Todo
 //delete individual tasks
 function removeTaskFromList(taskID) {
-  for (let task in todos) {
-    if (todos[task].todoID === taskID) {
-      todos = todos.filter((todo) => todo.todoID != taskID);
+  for (let displayTodo in displayTodos) {
+    if (displayTodo.todoID === taskID) {
+      displayTodo = displayTodo.filter((todo) => todo.todoID != taskID);
       showTasks();
     }
   }
@@ -303,7 +275,9 @@ function removeTaskFromList(taskID) {
 //delete all completed tasks
 let clearDoneButton = document.querySelector("#clearDoneButton");
 clearDoneButton.addEventListener("click", () => {
-  todos = todos.filter((todo) => todo.todoComplete != true);
+  displayTodos = displayTodos.filter(
+    (displayTodo) => displayTodo.todoComplete != true
+  );
   showTasks();
 });
 //end of delete all completed tasks
@@ -313,10 +287,10 @@ clearDoneButton.addEventListener("click", () => {
 //DONE: Edit Status
 //making tasks as completed
 function markingTaskAsDone(taskID) {
-  for (let task in todos) {
-    if (todos[task].todoID === taskID) {
+  for (let displayTodo of displayTodos) {
+    if (displayTodo.todoID === taskID) {
       //todos[task].todoComplete = true;
-      todos[task].todoComplete = !todos[task].todoComplete;
+      displayTodo.todoComplete = !displayTodo.todoComplete;
       showTasks();
     }
   }
@@ -329,10 +303,10 @@ let categoryToDelete = document.querySelector("#deleteCategorySelection");
 function deleteCategories() {
   categoryToDelete.innerHTML = '<option value="">Please Select</option>';
 
-  for (let category in categories) {
+  for (let category of categories) {
     let deleteCategoryName = document.createElement("option");
-    deleteCategoryName.value = categories[category].ID;
-    deleteCategoryName.textContent = categories[category].name;
+    deleteCategoryName.value = category.ID;
+    deleteCategoryName.textContent = category.name;
 
     categoryToDelete.appendChild(deleteCategoryName);
   }
@@ -390,7 +364,7 @@ function noCategory() {
       }
     });
   });
-  
+
   showTasks();
 }
 // loop through todos
@@ -403,14 +377,15 @@ function noCategory() {
 //same as?
 //FIXME: Edit Todos (be sure to update all existing todos with the edited category)
 //edit categories
+// 2. When editing catagories, you will need to edit/update the catagories array then call showTasks()
 function editCategories() {
   let categoryFilterSelector = document.querySelector("#editCategorySelection");
   categoryFilterSelector.innerHTML = '<option value="">Please Select</option>';
 
-  for (let category in categories) {
+  for (let category of categories) {
     let categoryName = document.createElement("option");
-    categoryName.value = categories[category].ID;
-    categoryName.textContent = categories[category].name;
+    categoryName.value = category.ID;
+    categoryName.textContent = category.name;
 
     categoryFilterSelector.appendChild(categoryName);
   }
@@ -449,10 +424,10 @@ let categoryFilterSelector = document.querySelector("#categoryFilterSelector");
 function filterTasksByCategory() {
   categoryFilterSelector.innerHTML = '<option value="">Please Select</option>';
 
-  for (let category in categories) {
+  for (let category of categories) {
     let categoryName = document.createElement("option");
-    categoryName.value = categories[category].ID;
-    categoryName.textContent = categories[category].name;
+    categoryName.value = category.ID;
+    categoryName.textContent = category.name;
 
     categoryFilterSelector.appendChild(categoryName);
   }
@@ -471,10 +446,10 @@ function removeChildren(container) {
 
 categoryFilterSelector.innerHTML = '<option value="">Please Select</option>';
 
-for (let category in categories) {
+for (let category of categories) {
   let categoryName = document.createElement("option");
-  categoryName.value = categories[category].ID;
-  categoryName.textContent = categories[category].name;
+  categoryName.value = category.ID;
+  categoryName.textContent = category.name;
 
   categoryFilterSelector.appendChild(categoryName);
 
