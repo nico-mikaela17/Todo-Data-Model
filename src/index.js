@@ -1,7 +1,4 @@
-// 1. Refactor showTask() function to use the new displayTodos.
-
-// 3. what happens if you delete a catagory, and a todo references a non-existing todo?
-//    3a. Hint. this will happen in the combinedTodos() function
+// DONE 1. Refactor showTask() function to use the new displayTodos.
 
 //DONE:Data model should store all information about todos including (but not limited to):Todo name, Status, ID, Category, Due Date
 //FIXME: add ID, also add ID to new categories, and when deleting categories use that id instead of name
@@ -53,6 +50,10 @@ let todos = [
 function combinedTodos() {
   let finalTodos = todos.map((todo) => {
     let todoCat = categories.find((cat) => cat.ID === todo.todoCategory);
+    // if ((todoCategory = undefined)) {
+    //   todoCat.name === "No Category";
+    // } else{
+    
 
     //FIXME:if todoCat is Undefined, define todocat with and object with no Category.
 
@@ -63,13 +64,15 @@ function combinedTodos() {
       todoComplete: todo.todoComplete,
       todoDueDate: todo.todoDueDate,
       color: todoCat.color,
-    };
-  });
-
-  console.log("combinedTodos: ", finalTodos);
+    }
+    }
+  );
 
   return finalTodos;
 }
+
+// 3. what happens if you delete a catagory, and a todo references a non-existing todo?
+//    3a. Hint. this will happen in the combinedTodos() function
 
 let form = document.querySelector("#createTaskForm");
 
@@ -157,8 +160,6 @@ function createTask() {
     todoDueDate: dueDate.value,
   };
 
-  console.log("newTodo: ", newTodo);
-
   // {
   //   todoID: 3,
   //   todoName: "Trip to Maryland",
@@ -219,7 +220,6 @@ function showTasks() {
     taskItem.appendChild(taskName);
     taskName.contentEditable = "plaintext-only";
     let taskCategory = document.createElement("h4"); //task category
-    console.log("cat: ", displayTodo);
     taskCategory.textContent = displayTodo.todoCategory;
     //FIXME: if (2 statements: delete and edit) statement might help to connect the id and if it's not there, change it to empty or no category
 
@@ -279,9 +279,7 @@ function removeTaskFromList(taskID) {
 //delete all completed tasks
 let clearDoneButton = document.querySelector("#clearDoneButton");
 clearDoneButton.addEventListener("click", () => {
-  displayTodos = displayTodos.filter(
-    (displayTodo) => displayTodo.todoComplete != true
-  );
+  todos = todos.filter((todo) => todo.todoComplete != true);
   showTasks();
 });
 //end of delete all completed tasks
@@ -291,13 +289,13 @@ clearDoneButton.addEventListener("click", () => {
 //DONE: Edit Status
 //making tasks as completed
 function markingTaskAsDone(taskID) {
-  for (let displayTodo of displayTodos) {
-    if (displayTodo.todoID === taskID) {
+  for (let todo of todos) {
+    if (todo.todoID === taskID) {
       //todos[task].todoComplete = true;
-      displayTodo.todoComplete = !displayTodo.todoComplete;
-      showTasks();
+      todo.todoComplete = !todo.todoComplete;
     }
   }
+  showTasks();
 }
 //end of marking tasks as completed
 
