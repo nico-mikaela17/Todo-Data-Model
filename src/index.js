@@ -3,6 +3,23 @@
 //DONE:Data model should store all information about todos including (but not limited to):Todo name, Status, ID, Category, Due Date
 //FIXME: add ID, also add ID to new categories, and when deleting categories use that id instead of name
 // preset categories
+
+//API
+const http = require('http')
+
+const hostname = "127.0.01"
+const port = "8001"
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200
+  res.setHeader('Content-Type', 'text/plain')
+  res.end('Hello World!')
+})
+
+server.listen(port, hostname, () => {
+  console.log(`Server listening at http://${hostname}:${port}`)
+})
+
 let categories = [
   { name: "School", color: "#275d38", ID: 0 },
 
@@ -53,7 +70,6 @@ function combinedTodos() {
     // if ((todoCategory = undefined)) {
     //   todoCat.name === "No Category";
     // } else{
-    
 
     //FIXME:if todoCat is Undefined, define todocat with and object with no Category.
 
@@ -64,9 +80,8 @@ function combinedTodos() {
       todoComplete: todo.todoComplete,
       todoDueDate: todo.todoDueDate,
       color: todoCat.color,
-    }
-    }
-  );
+    };
+  });
 
   return finalTodos;
 }
@@ -74,7 +89,7 @@ function combinedTodos() {
 // 3. what happens if you delete a catagory, and a todo references a non-existing todo?
 //    3a. Hint. this will happen in the combinedTodos() function
 
-let form = document.querySelector("#createTaskForm");
+// let form = document.querySelector("#createTaskForm");
 
 //DONE: Add New Category
 //DONE: allow new tasks to show any category + have a color
@@ -177,7 +192,7 @@ createBtn.addEventListener("click", () => {
 //end of task creation
 let todoList = document.querySelector("#todoList");
 function showTasks() {
-  let displayTodos = combinedTodos(); // console.log(todos);
+  let displayTodos = combinedTodos();
   todoList.innerHTML = "";
 
   // displayTodos.forEach((task) => {
@@ -457,7 +472,6 @@ for (let category of categories) {
 
   categoryFilterSelector.addEventListener("change", filterEntries, false);
   function filterEntries() {
-    console.log("working");
     for (let i = 1; i < taskItem.length; i++) {
       if (category == categoryName.value) {
         taskItem.style.display = "";
