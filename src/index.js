@@ -4,22 +4,6 @@
 //FIXME: add ID, also add ID to new categories, and when deleting categories use that id instead of name
 // preset categories
 
-//API
-const http = require("http");
-
-const hostname = "127.0.01";
-const port = "8001";
-
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "text/plain");
-  res.end("Hello World!");
-});
-
-server.listen(port, hostname, () => {
-  console.log(`Server listening at http://${hostname}:${port}`);
-});
-
 //create a new array of todos, that is used to show/display the todos and catagories
 //this will need to be called/used any time we are updating the UI/DOM
 function combinedTodos() {
