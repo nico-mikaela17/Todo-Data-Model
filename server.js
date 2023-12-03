@@ -7,10 +7,6 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.send("Hello World! GET Request");
-});
-
 let categories = [
   { name: "School", color: "#275d38", ID: 0 },
 
@@ -72,13 +68,17 @@ app.post("/api/todos", (req, res) => {
 });
 
 // PUT TODO (update)
-app.put("/api/todos/:todoID", (req, res) => {
-  const todoID = req.params.todoID;
-  const updatedTodo = req.body;
+app.put("/api/todos/", (req, res) => {
+  const todoID = Number(req.body.todoID);
+  const newName = req.body.name;
+  const newCategory = req.body.category;
+  const newDate = req.body.date;
 
-  todos[todoID] = updatedTodo;
+  todos[todoID].todoName = newName;
+  todos[todoID].todoCategory = newCategory;
+  todos[todoID].todoDueDate = newDate;
 
-  res.json(updatedTodo);
+  res.send(todos);
 });
 
 // DELETE TODO
@@ -91,8 +91,8 @@ app.delete("/api/todos/:todoID", (req, res) => {
 });
 
 // GET ALL TODOS for a CATEGORY
-app.get("/api/todos/category/:categoryID", (req, res) => {
-  const categoryID = req.params.categoryID;
+app.get("/api/todos/category/", (req, res) => {
+  const categoryID = req.body.categoryID;
   const todosInCategory = todos.filter(
     (todo) => todo.todoCategory === parseInt(categoryID)
   );
