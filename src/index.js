@@ -5,62 +5,20 @@
 // preset categories
 
 //API
-const http = require('http')
+const http = require("http");
 
-const hostname = "127.0.01"
-const port = "8001"
+const hostname = "127.0.01";
+const port = "8001";
 
 const server = http.createServer((req, res) => {
-  res.statusCode = 200
-  res.setHeader('Content-Type', 'text/plain')
-  res.end('Hello World!')
-})
+  res.statusCode = 200;
+  res.setHeader("Content-Type", "text/plain");
+  res.end("Hello World!");
+});
 
 server.listen(port, hostname, () => {
-  console.log(`Server listening at http://${hostname}:${port}`)
-})
-
-let categories = [
-  { name: "School", color: "#275d38", ID: 0 },
-
-  { name: "Office", color: "#0065A4", ID: 1 },
-
-  { name: "Chores", color: "#9d4edd", ID: 2 },
-
-  { name: "Dates", color: "#c9184a", ID: 3 },
-];
-
-// preset todos so I can see different colors and layout
-let todos = [
-  {
-    todoID: 0,
-    todoName: "Finish Homework",
-    todoCategory: 0,
-    todoComplete: false,
-    todoDueDate: "2023-09-02",
-  },
-  {
-    todoID: 1,
-    todoName: "Collections List",
-    todoCategory: 1,
-    todoComplete: false,
-    todoDueDate: "2023-09-18",
-  },
-  {
-    todoID: 2,
-    todoName: "Mop the kitchen",
-    todoCategory: 2,
-    todoComplete: false,
-    todoDueDate: "2023-09-13",
-  },
-  {
-    todoID: 3,
-    todoName: "Trip to Maryland",
-    todoCategory: 3,
-    todoComplete: false,
-    todoDueDate: "2023-09-21",
-  },
-];
+  console.log(`Server listening at http://${hostname}:${port}`);
+});
 
 //create a new array of todos, that is used to show/display the todos and catagories
 //this will need to be called/used any time we are updating the UI/DOM
